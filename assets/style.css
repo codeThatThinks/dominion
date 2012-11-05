@@ -1,0 +1,50 @@
+/* Stylesheet */
+
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	margin: 35px 35px 35px 35px;
+	font: 13pt 'Helvetica Neue';
+	font-weight: 200;
+	color: #555555;
+	-webkit-font-smoothing: antialiased;
+}
+
+h1
+{
+	font-weight: 100;
+}
+
+h1 b
+{
+	font-weight: 200;
+}
+
+canvas#space
+{
+	width: 960px;
+	height: 540px;
+	display: block;
+	color: #FFFFFF;
+	background: #333333 none;
+	text-align: center;
+}
+
+@font-face
+{
+	font-family: 'Helvetica Neue';
+	src: url('font_HelveticaNeueLight.ttf');
+	font-weight: 200;
+}
+
+@font-face
+{
+	font-family: 'Helvetica Neue';
+	src: url('font_HelveticaNeueUltraLight.ttf');
+	font-weight: 100;
+}
