@@ -285,9 +285,19 @@ $(document).ready(function()
 		this.speed = speed;
 	};*/
 
-	/*// checks mouse click
+	// checks mouse click
 	$('canvas#space').click(function(e)
 	{
+		if(orginMovable)
+		{
+			orginMovable = false;
+		}
+		else
+		{
+			orginMovable = true;
+			mouseX = e.offsetX - gridOrginX;
+			mouseY = e.offsetY - gridOrginY;
+		}
 	});
 
 	// checks mouse move
@@ -302,7 +312,7 @@ $(document).ready(function()
 
 		mouseLocX = e.offsetX;
 		mouseLocY = e.offsetY;
-	});*/
+	});
 
 	gameLoop();
 });
