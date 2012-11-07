@@ -38,8 +38,8 @@ $(document).ready(function()
 			Array[1] = grid y value
 		*/
 
-		posX -= gridOrginX;
-		posY -= gridOrginY;
+		posX -= gridOriginX;
+		posY -= gridOriginY;
 
 		var gridX = Math.floor((posY / perspectiveHeight) + ((posX / perspectiveWidth)));
 		var gridY = Math.floor((posY / perspectiveHeight) - ((posX / perspectiveWidth)));
@@ -85,75 +85,91 @@ $(document).ready(function()
 			gridY - y value on grid where line starts
 			gridX2 - x value on grid where line ends
 			griY2 - y value on grid where line ends
-			color - [optional] hex color value of line; defaults to #AAAAAA
+			color - [optional] rgb color value of line; defaults to rgb(170, 170, 170)
 			lineWidth - [optional] width of line, in pixels; defaults to 3
 		*/
 
 		context.beginPath();
 
-		context.moveTo(gridOrginX + getIsometricPoint(gridX, gridY)[0], gridOrginY + getIsometricPoint(gridX, gridY)[1]);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX2, gridY2)[0], gridOrginY + getIsometricPoint(gridX2, gridY2)[1]);
+		context.moveTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1]);
 
 		context.closePath();
-		color = color || '#AAAAAA';
-		context.strokeStyle = color;
+		color = color || '170,170,170';
+		context.strokeStyle = 'rgb(' + color + ')';
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
 		context.stroke();
 	}
 
-	var drawWall = function(gridX, gridY, gridX2, gridY2, height, color, lineWidth)
+	var drawWall = function(gridX, gridY, gridX2, gridY2, height, color, fill, lineWidth)
 	{
 		/*
 			gridX - x value on grid where line starts
 			gridY - y value on grid where line starts
 			gridX2 - x value on grid where line ends
 			griY2 - y value on grid where line ends
-			color - [optional] hex color value of line; defaults to #AAAAAA
+			color - [optional] rgb color value of line; defaults to rgb(170, 170, 170)
+			fill - [optional] boolean; fill shape with 40% opacity color
 			lineWidth - [optional] width of line, in pixels; defaults to 3
 		*/
 
 		context.beginPath();
 
-		context.moveTo(gridOrginX + getIsometricPoint(gridX, gridY)[0], gridOrginY + getIsometricPoint(gridX, gridY)[1]);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX2, gridY2)[0], gridOrginY + getIsometricPoint(gridX2, gridY2)[1]);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX2, gridY2)[0], gridOrginY + getIsometricPoint(gridX2, gridY2)[1] - gridSpacing);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX, gridY)[0], gridOrginY + getIsometricPoint(gridX, gridY)[1] - (height * gridSpacing));
-		context.lineTo(gridOrginX + getIsometricPoint(gridX, gridY)[0], gridOrginY + getIsometricPoint(gridX, gridY)[1]);
+		context.moveTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1]);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1] - gridSpacing);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1] - (height * gridSpacing));
+		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
 		
 		context.closePath();
-		color = color || '#AAAAAA';
-		context.strokeStyle = color;
+		color = color || '170,170,170';
+		context.strokeStyle = 'rgb(' + color + ')';
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
+		
+		if(fill)
+		{
+			context.fillStyle = 'rgba(' + color + ', 0.4)';
+			context.fill();
+		}
+
 		context.stroke();
 	}
 
 	// draws a rectangle
-	var drawRect = function(gridX, gridY, gridX2, gridY2, color, lineWidth)
+	var drawRect = function(gridX, gridY, gridX2, gridY2, color, fill, lineWidth)
 	{
 		/*
 			gridX - x value on grid where rect starts
 			gridY - y value on grid where rect starts
 			gridX2 - x value on grid where rect ends
 			griY2 - y value on grid where rect ends
-			color - [optional] hex color value of rect; defaults to #AAAAAA
+			color - [optional] rgb color value of line; defaults to rgb(170, 170, 170)
+			fill - [optional] boolean; fill shape with 40% opacity color
 			lineWidth - [optional] width of rect, in pixels; defaults to 3
 		*/
 
 		context.beginPath();
 
-		context.moveTo(gridOrginX + getIsometricPoint(gridX, gridY)[0], gridOrginY + getIsometricPoint(gridX, gridY)[1]);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX, gridY2)[0], gridOrginY + getIsometricPoint(gridX, gridY2)[1]);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX2, gridY2)[0], gridOrginY + getIsometricPoint(gridX2, gridY2)[1]);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX2, gridY)[0], gridOrginY + getIsometricPoint(gridX2, gridY)[1]);
-		context.lineTo(gridOrginX + getIsometricPoint(gridX, gridY)[0], gridOrginY + getIsometricPoint(gridX, gridY)[1]);
+		context.moveTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY2)[0], gridOriginY + getIsometricPoint(gridX, gridY2)[1]);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1]);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY)[0], gridOriginY + getIsometricPoint(gridX2, gridY)[1]);
+		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
 
 		context.closePath();
-		color = color || '#AAAAAA';
-		context.strokeStyle = color;
+		color = color || '170,170,170';
+		context.strokeStyle = 'rgb(' + color + ')';
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
+
+		if(fill)
+		{
+			context.fillStyle = 'rgba(' + color + ', 0.4)';
+			context.fill();
+		}
+
 		context.stroke();
 	}
 
@@ -161,67 +177,67 @@ $(document).ready(function()
 	var drawGrid = function(color, lineWidth)
 	{
 		/*
-			color - [optional] hex color value of grid; defaults to #AAAAAA
+			color - [optional] rgb color value of line; defaults to rgb(170, 170, 170)
 			lineWidth - [optional] width of grid, in pixels; defaults to 3
 		*/
 
 		context.beginPath();
 
 		// left top-bottom
-		for(var n = 0; (gridOrginY + getIsometricY(gridOrginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(gridOrginX, gridOrginY + (n * perspectiveHeight));
-			context.lineTo(0, gridOrginY + getIsometricY(gridOrginX) + (n * perspectiveHeight));
+			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
+			context.lineTo(0, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight));
 		}
 
-		for(var n = 0; (gridOrginY + getIsometricY(gridOrginX) + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(gridOrginX, gridOrginY + (n * perspectiveHeight));
-			context.lineTo(0, gridOrginY + getIsometricY(gridOrginX) + (n * perspectiveHeight));
+			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
+			context.lineTo(0, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight));
 		}
 
 		// left bottom-top
-		for(var n = 0; (gridOrginY - getIsometricY(gridOrginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (gridOriginY - getIsometricY(gridOriginX) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(0, gridOrginY + (n * perspectiveHeight) - getIsometricY(gridOrginX));
-			context.lineTo(gridOrginX, gridOrginY + getIsometricY(gridOrginX) + (n * perspectiveHeight) - getIsometricY(gridOrginX));
+			context.moveTo(0, gridOriginY + (n * perspectiveHeight) - getIsometricY(gridOriginX));
+			context.lineTo(gridOriginX, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight) - getIsometricY(gridOriginX));
 		}
 
-		for(var n = 0; (gridOrginY + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (gridOriginY + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(0, gridOrginY + (n * perspectiveHeight) - getIsometricY(gridOrginX));
-			context.lineTo(gridOrginX, gridOrginY + getIsometricY(gridOrginX) + (n * perspectiveHeight) - getIsometricY(gridOrginX));
+			context.moveTo(0, gridOriginY + (n * perspectiveHeight) - getIsometricY(gridOriginX));
+			context.lineTo(gridOriginX, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight) - getIsometricY(gridOriginX));
 		}
 
 		// right top-bottom
-		for(var n = 0; (gridOrginY + getIsometricY(gridOrginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(gridOrginX, gridOrginY + (n * perspectiveHeight));
-			context.lineTo(canvas.width(), gridOrginY + getIsometricY(canvas.width() - gridOrginX) + (n * perspectiveHeight));
+			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
+			context.lineTo(canvas.width(), gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight));
 		}
 
-		for(var n = 0; (gridOrginY + getIsometricY(canvas.width() - gridOrginX) + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(gridOrginX, gridOrginY + (n * perspectiveHeight));
-			context.lineTo(canvas.width(), gridOrginY + getIsometricY(canvas.width() - gridOrginX) + (n * perspectiveHeight));
+			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
+			context.lineTo(canvas.width(), gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight));
 		}
 
 		// right bottom-top
-		for(var n = 0; (gridOrginY - getIsometricY(canvas.width() - gridOrginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (gridOriginY - getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(canvas.width(), gridOrginY + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOrginX));
-			context.lineTo(gridOrginX, gridOrginY + getIsometricY(canvas.width() - gridOrginX) + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOrginX));
+			context.moveTo(canvas.width(), gridOriginY + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
+			context.lineTo(gridOriginX, gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
 		}
 
-		for(var n = 0; (gridOrginY + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (gridOriginY + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(canvas.width(), gridOrginY + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOrginX));
-			context.lineTo(gridOrginX, gridOrginY + getIsometricY(canvas.width() - gridOrginX) + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOrginX));
+			context.moveTo(canvas.width(), gridOriginY + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
+			context.lineTo(gridOriginX, gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
 		}
 
 		context.closePath();
-		color = color || '#AAAAAA';
-		context.strokeStyle = color;
+		color = color || '170,170,170';
+		context.strokeStyle = 'rgb(' + color + ')';
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
 		context.stroke();
@@ -238,24 +254,18 @@ $(document).ready(function()
 	// main rendering loop
 	var gameLoop = function()
 	{
+		// clear canvas, draw grid
 		clear();
-		drawGrid('#383838');
+		drawGrid('54,54,54');
 
+		// draw grid cursor
 		var gridPoint = getGridPoint(mouseLocX, mouseLocY);
-		drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, '#444444');
+		drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, '68,68,68');
 
-		drawRect(-10, -10, 10, 10, '#555555');
-
-		drawLine(0, 0, 3, 0, '#0000FF');
-		drawLine(0, 0, 0, 3, '#0000FF');
-
-		context.beginPath();
-		context.moveTo((50 * 0.707) - (100 * 0.707), (50 * 0.409) + (100 * 0.409) - 0.816);
-		context.lineTo((50 * 0.707) - (150 * 0.707), (50 * 0.409) + (150 * 0.409) - 0.816);
-		context.closePath();
-		context.strokeStyle = '#FFFFFF';
-		context.lineWidth = 1;
-		context.stroke();
+		// draw objects
+		drawRect(-10, -10, 10, 10, '85,85,85');
+		drawWall(0, 0, 3, 0, 1, '67,125,26', true);
+		drawWall(0, 0, 0, 3, 1, '67,125,26', true);
 
 		loop = setTimeout(gameLoop, 20);
 	}
@@ -269,10 +279,10 @@ $(document).ready(function()
 	var perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 	var perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 
-	var gridOrginX = canvas.width() / 2;	// pixel location of (0, 0)
-	var gridOrginY = canvas.height() / 2;
+	var gridOriginX = canvas.width() / 2;	// pixel location of (0, 0)
+	var gridOriginY = canvas.height() / 2;
 
-	var orginMovable = false;
+	var originMovable = false;
 	var mouseX, mouseY, mouseLocX, mouseLocY;
 
 	/* game variables and arrays */
@@ -288,26 +298,26 @@ $(document).ready(function()
 	// checks mouse click
 	$('canvas#space').click(function(e)
 	{
-		if(orginMovable)
+		if(originMovable)
 		{
-			orginMovable = false;
+			originMovable = false;
 		}
 		else
 		{
-			orginMovable = true;
-			mouseX = e.offsetX - gridOrginX;
-			mouseY = e.offsetY - gridOrginY;
+			originMovable = true;
+			mouseX = e.offsetX - gridOriginX;
+			mouseY = e.offsetY - gridOriginY;
 		}
 	});
 
 	// checks mouse move
 	$('canvas#space').mousemove(function(e)
 	{
-		// move orgin on cmd down
-		if(orginMovable)
+		// move origin on cmd down
+		if(originMovable)
 		{
-			gridOrginX = e.offsetX - mouseX;
-			gridOrginY = e.offsetY - mouseY;
+			gridOriginX = e.offsetX - mouseX;
+			gridOriginY = e.offsetY - mouseY;
 		}
 
 		mouseLocX = e.offsetX;
