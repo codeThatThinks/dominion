@@ -266,6 +266,16 @@ $(document).ready(function()
 		drawRect(-10, -10, 10, 10, '85,85,85');
 		drawRect(playerCountry.territory[0][0], playerCountry.territory[0][1], playerCountry.territory[0][0] + 1, playerCountry.territory[0][1] + 1, playerCountry.color, true);
 
+		// draw UI
+		context.fillStyle = "rgb(" + playerCountry.color + ")";
+		context.font = '12pt Helvetica Neue';
+		context.textBaseline = 'bottom';
+		context.fillText("Country #" + playerCountry.id + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length, 25, canvas.height() - 25);
+
+		context.fillStyle = "rgb(170,170,170)";
+		context.fillText("mouse (" + mouseLocX + "," + mouseLocY + ")", 25, 40);
+		context.fillText("isometric (" + getGridPoint(mouseLocX, mouseLocY)[0] + "," + getGridPoint(mouseLocX, mouseLocY)[1] + ")", 25, 60);
+
 		loop = setTimeout(gameLoop, 20);
 	}
 
