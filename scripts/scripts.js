@@ -6,88 +6,8 @@ $(document).ready(function()
 		- height: 540px
 	*/
 
-	/* functions */
-/*
-	 drawRect - isometrically draw a rectangle 
-	var drawRect = function(x, y, width, height)
-	{
-		/*
-			x - in pixels
-			y - in pixels
-			width - in grid units
-			height - in grid units
-		
-
-		width = width * perspectiveWeight;
-		height = height * perspectiveHeight;
-
-		context.beginPath();
-		context.moveTo(x,y);
-		context.lineTo(x - (Math.cos(perspectiveAngle * (Math.PI / 180)) * height), y + (Math.sin(perspectiveAngle * (Math.PI / 180)) * height));
-		content.lineTo(x + (Math.cos(perspectiveAngle * (Math.PI / 180)) * height) - (Math.cos(perspectiveAngle * (Math.PI / 180)) * width), );
-
-		n = Math.sin(perspectiveAngle * (Math.PI / 180)) * height;
-		n2 = Math.sin(perspectiveAngle * (Math.PI / 180)) * width;
-		y3 = y + (Math.sin(perspectiveAngle * (Math.PI / 180)) * height) + (Math.sin(perspectiveAngle * (Math.PI / 180)) * width);
-
-		/* top right coord 
-		context.lineTo();
-
-		/* back to upper left coord 
-		context.lineTo(x, y);
-
-		cos 30 = n / height
-		n = cos 30 * height
-
-		x2 = x - n
-	}
-
-	var drawRectOld = function(x, y, width, height)
-	{
-		perspectiveDistance = Math.round(width * Math.sin(perspectiveAngle * (Math.PI / 180)));
-
-		context.beginPath();
-		context.moveTo(x, y);
-		context.lineTo(x, y + height);
-		context.lineTo(x + width, y + height - perspectiveDistance);
-		context.lineTo(x + width, y + height - perspectiveDistance - height);
-		context.lineTo(x, y);
-		context.closePath();
-
-		context.strokeStyle = "#333333";
-		context.lineWidth = 2;
-		context.stroke();
-	}
-
-*/
-/*
-	// draws a grid
-	var drawGrid = function()
-	{
-		var startY = gridOrginY - (Math.tan(perspectiveAngle * (Math.PI / 180)) * gridOrginX) - (perspectiveHeight / 2);
-
-		gridSpacingHeight = (perspectiveHeight / 2) * (canvas.width() / (perspectiveWidth / 2));
-		gridSpacingWidth = (perspectiveWidth / 2) * (canvas.width() / (perspectiveWidth / 2));
-
-		context.beginPath();
-
-		for(var y = startY - gridSpacingHeight; y <= (canvas.height() + gridSpacingHeight); y += perspectiveHeight)
-		{
-			context.moveTo(0, y);
-			context.lineTo(0 + canvas.width(), y + gridSpacingHeight);
-			context.moveTo(canvas.width(), y);
-			context.lineTo(canvas.width() - canvas.width(), y + gridSpacingHeight);
-		}
-
-		context.closePath();
-
-		context.lineWidth = 2;
-		context.strokeStyle = '#444444';
-		context.stroke();
-	}
-*/
-
-	/* isometric functions */
+	/****** functions ******/
+	/**** isometric functions ****/
 	// get pixel coords from grid coords
 	var getIsometricPoint = function(gridX, gridY)
 	{
@@ -100,14 +20,14 @@ $(document).ready(function()
 			Array[1] = pixel y value
 		*/
 
-		var posX = (gridX - gridY) * perspectiveWidth / 2;
-		var posY = (gridX + gridY) * perspectiveHeight / 2;
+		var posX = (gridX - gridY) * (perspectiveWidth / 2);
+		var posY = (gridX + gridY) * (perspectiveHeight / 2);
 
 		return [posX, posY];
 	}
 
 	// get grid coords from pixel coords
-	var getGridPoint = function(x, y)
+	var getGridPoint = function(posX, posY)
 	{
 		/*
 			x - pixel x value
@@ -117,24 +37,46 @@ $(document).ready(function()
 			Array[0] = grid x value
 			Array[1] = grid y value
 		*/
+
+		posX -= gridOrginX;
+		posY -= gridOrginY;
+
+		var gridX = Math.floor((posY / perspectiveHeight) + ((posX / perspectiveWidth)));
+		var gridY = Math.floor((posY / perspectiveHeight) - ((posX / perspectiveWidth)));
+
+		return [gridX, gridY];
 	}
 
-/*
+	// get x value of corresponding y value
 	var getIsometricX = function(x)
 	{
-		isometricValue = Math.cos(perspectiveAngle * (Math.PI / 180)) * x
+		/*
+			x - length
+
+			returns:
+			corresponding value to x
+		*/
+
+		isometricValue = x / Math.tan(perspectiveAngle * (Math.PI / 180));
 		return isometricValue;
 	}
-*/
 
 	// get y value of corresponding x value
 	var getIsometricY = function(x)
 	{
+		/*
+			x - length
+
+			returns:
+			corresponding value to x
+		*/
+
 		isometricValue = Math.tan(perspectiveAngle * (Math.PI / 180)) * x;
 		return isometricValue;
 	}
 
-	/* drawing functions */
+
+	/**** drawing functions ****/
 	// draws a horizontal line
 	var drawLine = function(gridX, gridY, gridX2, gridY2, color, lineWidth)
 	{
@@ -285,7 +227,8 @@ $(document).ready(function()
 		context.stroke();
 	}
 
-	/* default functions */
+
+	/**** default functions ****/
 	// clears canvas
 	var clear = function()
 	{
@@ -297,17 +240,22 @@ $(document).ready(function()
 	{
 		clear();
 		drawGrid('#383838');
-		drawWall(-2, 1, 3, 1, 1, '#00FF00');
-		drawWall(3, 1, 3, -2, 1, '#00FF00');
-		drawWall(3, -2, -2, -2, 1, '#00FF00');
-		drawWall(-2, -2, -2, 1, 1, '#00FF00');
 
-		drawRect(-3, 3, -2, 2);
+		var gridPoint = getGridPoint(mouseLocX, mouseLocY);
+		drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, '#444444');
 
-		drawWall(4, 3, 4, 5, 1, '#FF0000');
+		drawRect(-10, -10, 10, 10, '#555555');
 
-		drawLine(-1, 3, 1, 3, '#0000FF');
-		drawLine(0, 2, 0, 4, '#0000FF');
+		drawLine(0, 0, 3, 0, '#0000FF');
+		drawLine(0, 0, 0, 3, '#0000FF');
+
+		context.beginPath();
+		context.moveTo((50 * 0.707) - (100 * 0.707), (50 * 0.409) + (100 * 0.409) - 0.816);
+		context.lineTo((50 * 0.707) - (150 * 0.707), (50 * 0.409) + (150 * 0.409) - 0.816);
+		context.closePath();
+		context.strokeStyle = '#FFFFFF';
+		context.lineWidth = 1;
+		context.stroke();
 
 		loop = setTimeout(gameLoop, 20);
 	}
@@ -325,7 +273,7 @@ $(document).ready(function()
 	var gridOrginY = canvas.height() / 2;
 
 	var orginMovable = false;
-	var mouseX, mouseY;
+	var mouseX, mouseY, mouseLocX, mouseLocY;
 
 	/* game variables and arrays */
 	
@@ -337,34 +285,24 @@ $(document).ready(function()
 		this.speed = speed;
 	};*/
 
-	/*
-	// register keydown events
-	window.addEventListener('keydown', checkKeyboard, true);
-	*/
-
-	// click and drag orgin
+	/*// checks mouse click
 	$('canvas#space').click(function(e)
 	{
-		if(orginMovable)
-		{
-			orginMovable = false;
-		}
-		else
-		{
-			orginMovable = true;
-			mouseX = e.offsetX - gridOrginX;
-			mouseY = e.offsetY - gridOrginY;
-		}
 	});
 
+	// checks mouse move
 	$('canvas#space').mousemove(function(e)
 	{
+		// move orgin on cmd down
 		if(orginMovable)
 		{
 			gridOrginX = e.offsetX - mouseX;
 			gridOrginY = e.offsetY - mouseY;
 		}
-	});
+
+		mouseLocX = e.offsetX;
+		mouseLocY = e.offsetY;
+	});*/
 
 	gameLoop();
 });
