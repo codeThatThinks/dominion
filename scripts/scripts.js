@@ -264,8 +264,7 @@ $(document).ready(function()
 
 		// draw objects
 		drawRect(-10, -10, 10, 10, '85,85,85');
-		drawWall(0, 0, 3, 0, 1, '67,125,26', true);
-		drawWall(0, 0, 0, 3, 1, '67,125,26', true);
+		drawRect(playerCountry.territory[0][0], playerCountry.territory[0][1], playerCountry.territory[0][0] + 1, playerCountry.territory[0][1] + 1, playerCountry.color, true);
 
 		loop = setTimeout(gameLoop, 20);
 	}
@@ -289,14 +288,20 @@ $(document).ready(function()
 	var playerCountry = function(id, power, territory)
 	{
 		this.id = id;
+		this.color = color;
 		this.power = power;
 		this.territory = territory;
 	}
 
 	// initalize country
 	playerCountry.id = Math.floor(Math.random() * 101);
+	playerCountry.color = Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ','  + Math.floor(Math.random() * 256)
 	playerCountry.power = 10;
-	playerCountry.territory = new Array(new Array('0', '0'));
+	playerCountry.territory = new Array(new Array(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9));
+
+	// center origin on country's first square
+	gridOriginX -= getIsometricPoint(playerCountry.territory[0][0], playerCountry.territory[0][1])[0];
+	gridOriginY -= getIsometricPoint(playerCountry.territory[0][0], playerCountry.territory[0][1])[1];
 
 	// checks mouse click
 	$('canvas#space').click(function(e)
