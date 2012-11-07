@@ -285,15 +285,18 @@ $(document).ready(function()
 	var originMovable = false;
 	var mouseX, mouseY, mouseLocX, mouseLocY;
 
-	/* game variables and arrays */
-	
-	/*var ship = function(x, y ,r)
+	// game variables
+	var playerCountry = function(id, power, territory)
 	{
-		this.x = x;
-		this.y = y;
-		this.angle = angle;
-		this.speed = speed;
-	};*/
+		this.id = id;
+		this.power = power;
+		this.territory = territory;
+	}
+
+	// initalize country
+	playerCountry.id = Math.floor(Math.random() * 101);
+	playerCountry.power = 10;
+	playerCountry.territory = new Array(new Array('0', '0'));
 
 	// checks mouse click
 	$('canvas#space').click(function(e)
