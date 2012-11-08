@@ -1,3 +1,15 @@
+/*function Point()
+{
+	this.x = x;
+	this.y = y;
+
+	function set(newX, newY)
+	{
+		x = newX;
+		y = newY;
+	}
+}*/
+
 $(document).ready(function()
 {
 	/*
@@ -5,6 +17,17 @@ $(document).ready(function()
 		- width: 960px
 		- height: 540px
 	*/
+
+	/****** objects ******/
+	function Element(name, x, y, width, height)
+	{
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+
 
 	/****** functions ******/
 	/**** isometric functions ****/
@@ -244,6 +267,81 @@ $(document).ready(function()
 	}
 
 
+	/**** ui functions ****/
+	// draw a button
+	var drawButton = function(x, y, width, height, color, opacity)
+	{
+		/*
+			x - x location where button will be drawn
+			y - y location where button will be drawn
+			width - width of button
+			height - height of button
+			color - rgb color value of button background
+			opacity - opacity of button background
+		*/
+
+		context.beginPath();
+
+		context.rect(x, y, width, height);
+
+		context.closePath();
+		context.fillStyle = 'rgba(' + color + ', ' + opacity + ')';
+		context.fill();
+	}
+
+	// add an element to the ui array
+	var addElement = function(name, x, y, width, height)
+	{
+		/*
+			name - name of element to be added
+			x - x location of element to be added
+			y - y location of element to be added
+			width - width of element to be added
+			height - height of element to be added
+		*/
+
+		elementsArray.push(new Element(name, x, y, width, height));
+	}
+
+	// remove an element from the ui array
+	var removeElement = function(name)
+	{
+		/*
+			name - name of element to be removed
+		*/
+
+		for(var n = 0; n < elementsArray.length; n++)
+		{
+			if(elementsArray[n].name = name)
+			{
+				elementsArray.splice(n, 1);
+				break;
+			}
+		}
+	}
+
+	// check if point on inside an element in the elements array
+	var isElement = function(x, y)
+	{
+		/*
+			x - x value of coordinate to check
+			y -y value of coordinate to check
+		*/
+
+		for(var n = 0; n < elementsArray.length; n++)
+		{
+			if(x >= elementsArray[n].x && x <= (elementsArray[n].x + elementsArray[n].width))
+			{
+				if(y >= elementsArray[n].y && y <= (elementsArray[n].y + elementsArray[n].height))
+				{
+					return elementsArray[n].name;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	/**** default functions ****/
 	// clears canvas
 	var clear = function()
@@ -256,12 +354,20 @@ $(document).ready(function()
 	{
 		// clear canvas, draw grid
 		clear();
+
+		// recalculate
+		perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
+		perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
+
 		drawGrid('54,54,54');
 
 		// draw grid cursor
-		var gridPoint = getGridPoint(mouseLocX, mouseLocY);
-		drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, '68,68,68');
-
+		if(mouseLocX && mouseLocY && !isElement(mouseLocX, mouseLocY))
+		{
+			var gridPoint = getGridPoint(mouseLocX, mouseLocY);
+			drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, '68,68,68');
+		}
+		
 		// draw objects
 		drawRect(-10, -10, 10, 10, '85,85,85');
 		drawRect(playerCountry.territory[0][0], playerCountry.territory[0][1], playerCountry.territory[0][0] + 1, playerCountry.territory[0][1] + 1, playerCountry.color, true);
@@ -275,6 +381,24 @@ $(document).ready(function()
 		context.fillStyle = "rgb(170,170,170)";
 		context.fillText("mouse (" + mouseLocX + "," + mouseLocY + ")", 25, 40);
 		context.fillText("isometric (" + getGridPoint(mouseLocX, mouseLocY)[0] + "," + getGridPoint(mouseLocX, mouseLocY)[1] + ")", 25, 60);
+		context.fillText("on element: " + isElement(mouseLocX, mouseLocY), 25, 80);
+
+		// zoom constraints: max - 150, min - 20, default - 70, multiples of 10
+		// zoom in button
+		drawButton(canvas.width() - 55, 25, 30, 30, "0,0,0", 0.4);
+		context.fillStyle = "rgb(170,170,170)";
+		context.font = '14pt Helvetica Neue';
+		context.textBaseline = 'top';
+		context.fillText("+", canvas.width() - 46, 27);
+		addElement('btnZoomIn', canvas.width() - 55, 25, 30, 30);
+
+		// zoom out button
+		drawButton(canvas.width() - 55, 65, 30, 30, "0,0,0", 0.4);
+		context.fillStyle = "rgb(170,170,170)";
+		context.font = '14pt Helvetica Neue';
+		context.textBaseline = 'top';
+		context.fillText("–", canvas.width() - 45, 68);
+		addElement('btnZoomOut', canvas.width() - 55, 65, 30, 30);
 
 		loop = setTimeout(gameLoop, 20);
 	}
@@ -284,7 +408,7 @@ $(document).ready(function()
 
 	// graphics variables
 	var perspectiveAngle = 30;
-	var gridSpacing = 50;
+	var gridSpacing = 70;
 	var perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 	var perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 
@@ -293,6 +417,9 @@ $(document).ready(function()
 
 	var originMovable = false;
 	var mouseX, mouseY, mouseLocX, mouseLocY;
+
+	// ui variables
+	var elementsArray = new Array();
 
 	// game variables
 	var playerCountry = function(id, power, territory)
@@ -316,7 +443,28 @@ $(document).ready(function()
 	// checks mouse click
 	$('canvas#space').click(function(e)
 	{
-		if(originMovable)
+		if(isElement(e.offsetX, e.offsetY))
+		{
+			switch(isElement(e.offsetX, e.offsetY))
+			{
+				case 'btnZoomIn':
+					if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
+					{
+						gridSpacing += 10;
+					}
+
+					break;
+
+				case 'btnZoomOut':
+					if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
+					{
+						gridSpacing -= 10;
+					}
+
+					break;
+			}
+		}
+		else if(originMovable)
 		{
 			originMovable = false;
 		}
@@ -326,6 +474,8 @@ $(document).ready(function()
 			mouseX = e.offsetX - gridOriginX;
 			mouseY = e.offsetY - gridOriginY;
 		}
+
+		return false;
 	});
 
 	// checks mouse move
