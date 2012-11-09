@@ -169,6 +169,14 @@ $(document).ready(function()
 		this.textHeight = textHeight;
 	}
 
+	function Country(name, color, power, territory)
+	{
+		this.name = name;
+		this.color = color;
+		this.power = power;
+		this.territory = territory;
+	}
+
 
 	/****** functions ******/
 	/**** isometric functions ****/
@@ -202,13 +210,13 @@ $(document).ready(function()
 			Array[1] = grid y value
 		*/
 
-		posX -= gridOriginX;
-		posY -= gridOriginY;
+		posX -= origin.x;
+		posY -= origin.y;
 
 		var gridX = Math.floor((posY / perspectiveHeight) + ((posX / perspectiveWidth)));
 		var gridY = Math.floor((posY / perspectiveHeight) - ((posX / perspectiveWidth)));
 
-		return [gridX, gridY];
+		return new Point(gridX, gridY);
 	}
 
 	// get x value of corresponding y value
@@ -255,8 +263,8 @@ $(document).ready(function()
 
 		context.beginPath();
 
-		context.moveTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1]);
+		context.moveTo(origin.x + getIsometricPoint(gridX, gridY)[0], origin.y + getIsometricPoint(gridX, gridY)[1]);
+		context.lineTo(origin.x + getIsometricPoint(gridX2, gridY2)[0], origin.y + getIsometricPoint(gridX2, gridY2)[1]);
 
 		context.closePath();
 		color = color || new Color(170,170,170);
@@ -280,11 +288,11 @@ $(document).ready(function()
 
 		context.beginPath();
 
-		context.moveTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1]);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1] - gridSpacing);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1] - (height * gridSpacing));
-		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
+		context.moveTo(origin.x + getIsometricPoint(gridX, gridY)[0], origin.y + getIsometricPoint(gridX, gridY)[1]);
+		context.lineTo(origin.x + getIsometricPoint(gridX2, gridY2)[0], origin.y + getIsometricPoint(gridX2, gridY2)[1]);
+		context.lineTo(origin.x + getIsometricPoint(gridX2, gridY2)[0], origin.y + getIsometricPoint(gridX2, gridY2)[1] - gridSpacing);
+		context.lineTo(origin.x + getIsometricPoint(gridX, gridY)[0], origin.y + getIsometricPoint(gridX, gridY)[1] - (height * gridSpacing));
+		context.lineTo(origin.x + getIsometricPoint(gridX, gridY)[0], origin.y + getIsometricPoint(gridX, gridY)[1]);
 		
 		context.closePath();
 		color = color || new Color(170,170,170);
@@ -316,11 +324,11 @@ $(document).ready(function()
 
 		context.beginPath();
 
-		context.moveTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY2)[0], gridOriginY + getIsometricPoint(gridX, gridY2)[1]);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1]);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY)[0], gridOriginY + getIsometricPoint(gridX2, gridY)[1]);
-		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
+		context.moveTo(origin.x + getIsometricPoint(gridX, gridY)[0], origin.y + getIsometricPoint(gridX, gridY)[1]);
+		context.lineTo(origin.x + getIsometricPoint(gridX, gridY2)[0], origin.y + getIsometricPoint(gridX, gridY2)[1]);
+		context.lineTo(origin.x + getIsometricPoint(gridX2, gridY2)[0], origin.y + getIsometricPoint(gridX2, gridY2)[1]);
+		context.lineTo(origin.x + getIsometricPoint(gridX2, gridY)[0], origin.y + getIsometricPoint(gridX2, gridY)[1]);
+		context.lineTo(origin.x + getIsometricPoint(gridX, gridY)[0], origin.y + getIsometricPoint(gridX, gridY)[1]);
 
 		context.closePath();
 		color = color || new Color(170,170,170);
@@ -348,55 +356,55 @@ $(document).ready(function()
 		context.beginPath();
 
 		// left top-bottom
-		for(var n = 0; (gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (origin.y + getIsometricY(origin.x) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
-			context.lineTo(0, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight));
+			context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
+			context.lineTo(0, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight));
 		}
 
-		for(var n = 0; (gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (origin.y + getIsometricY(origin.x) + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
-			context.lineTo(0, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight));
+			context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
+			context.lineTo(0, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight));
 		}
 
 		// left bottom-top
-		for(var n = 0; (gridOriginY - getIsometricY(gridOriginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (origin.y - getIsometricY(origin.x) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(0, gridOriginY + (n * perspectiveHeight) - getIsometricY(gridOriginX));
-			context.lineTo(gridOriginX, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight) - getIsometricY(gridOriginX));
+			context.moveTo(0, origin.y + (n * perspectiveHeight) - getIsometricY(origin.x));
+			context.lineTo(origin.x, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight) - getIsometricY(origin.x));
 		}
 
-		for(var n = 0; (gridOriginY + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (origin.y + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(0, gridOriginY + (n * perspectiveHeight) - getIsometricY(gridOriginX));
-			context.lineTo(gridOriginX, gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight) - getIsometricY(gridOriginX));
+			context.moveTo(0, origin.y + (n * perspectiveHeight) - getIsometricY(origin.x));
+			context.lineTo(origin.x, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight) - getIsometricY(origin.x));
 		}
 
 		// right top-bottom
-		for(var n = 0; (gridOriginY + getIsometricY(gridOriginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (origin.y + getIsometricY(origin.x) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
-			context.lineTo(canvas.width(), gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight));
+			context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
+			context.lineTo(canvas.width(), origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight));
 		}
 
-		for(var n = 0; (gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(gridOriginX, gridOriginY + (n * perspectiveHeight));
-			context.lineTo(canvas.width(), gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight));
+			context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
+			context.lineTo(canvas.width(), origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight));
 		}
 
 		// right bottom-top
-		for(var n = 0; (gridOriginY - getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight)) < 960; n++)
+		for(var n = 0; (origin.y - getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight)) < 960; n++)
 		{
-			context.moveTo(canvas.width(), gridOriginY + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
-			context.lineTo(gridOriginX, gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
+			context.moveTo(canvas.width(), origin.y + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
+			context.lineTo(origin.x, origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
 		}
 
-		for(var n = 0; (gridOriginY + (n * perspectiveHeight)) > 0; n--)
+		for(var n = 0; (origin.y + (n * perspectiveHeight)) > 0; n--)
 		{
-			context.moveTo(canvas.width(), gridOriginY + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
-			context.lineTo(gridOriginX, gridOriginY + getIsometricY(canvas.width() - gridOriginX) + (n * perspectiveHeight) - getIsometricY(canvas.width() - gridOriginX));
+			context.moveTo(canvas.width(), origin.y + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
+			context.lineTo(origin.x, origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
 		}
 
 		context.closePath();
@@ -468,6 +476,61 @@ $(document).ready(function()
 		return false;
 	}
 
+
+	/**** game functions ****/
+	// claims a square
+	var claim = function(point)
+	{
+		if(!isClaimed(point))
+		{
+			if(playerCountry.power - 2 >= 0)
+			{
+				playerCountry.territory.push(point);
+				playerCountry.power -= 2;
+			}
+		}
+		else
+		{
+			unclaim(point);
+		}
+	}
+
+	// unclaims a square
+	var unclaim = function(point)
+	{
+		for(var n = 0; n < playerCountry.territory.length; n++)
+		{
+			if(playerCountry.territory[n].x == point.x && playerCountry.territory[n].y == point.y)
+			{
+				playerCountry.territory.splice(n, 1);
+				playerCountry.power += 1;
+			}
+		}
+	}
+
+	// returns true if point is claimed
+	var isClaimed = function(point)
+	{
+		for(var n = 0; n < playerCountry.territory.length; n++)
+		{
+			if(playerCountry.territory[n].x == point.x && playerCountry.territory[n].y == point.y)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	var drawTerritory = function()
+	{
+		for(var n = 0; n < playerCountry.territory.length; n++)
+		{
+			drawRect(playerCountry.territory[n].x, playerCountry.territory[n].y, playerCountry.territory[n].x + 1, playerCountry.territory[n].y + 1, playerCountry.color, true);
+		}
+	}
+
+
 	/**** default functions ****/
 	// clears canvas
 	var clear = function()
@@ -491,19 +554,18 @@ $(document).ready(function()
 		if(mouseLocX && mouseLocY && isElement(new Point(mouseLocX, mouseLocY)).type != 'button')
 		{
 			var gridPoint = getGridPoint(mouseLocX, mouseLocY);
-			drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, new Color(68,68,68));
+			drawRect(gridPoint.x, gridPoint.y, gridPoint.x + 1, gridPoint.y + 1, new Color(68,68,68));
 		}
 		
 		// draw objects
 		drawRect(-10, -10, 10, 10, new Color(85,85,85));
-		drawRect(playerCountry.territory[0][0], playerCountry.territory[0][1], playerCountry.territory[0][0] + 1, playerCountry.territory[0][1] + 1, playerCountry.color, true);
+		drawTerritory();
 
 		// draw UI
 		getElement("lblMouse").text = "mouse (" + mouseLocX + "," + mouseLocY + ")";
-		getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocX, mouseLocY)[0] + "," + getGridPoint(mouseLocX, mouseLocY)[1] + ")";
+		getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocX, mouseLocY).x + "," + getGridPoint(mouseLocX, mouseLocY).y + ")";
 		getElement("lblElement").text = "on element: " + isElement(new Point(mouseLocX, mouseLocY)).name;
-
-		getElement('lblCountry').text = "Country #" + playerCountry.id + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length;
+		getElement('lblCountry').text = playerCountry.name + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length;
 
 		drawElements();
 
@@ -520,27 +582,13 @@ $(document).ready(function()
 	var gridSpacing = 70;
 	var perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 	var perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
+	var origin = new Point(canvas.width() / 2, canvas.height() / 2);
 
-	var gridOriginX = canvas.width() / 2;	// pixel location of (0, 0)
-	var gridOriginY = canvas.height() / 2;
-
-	var originMovable = false, isFullscreen = false, isPanning = false;
+	var originMovable = false, isFullscreen = false, isPanning = false, isClaiming = false;
 	var mouseX, mouseY, mouseLocX, mouseLocY;
 
 	// game variables
-	var playerCountry = function(id, power, territory)
-	{
-		this.id = id;
-		this.color = color;
-		this.power = power;
-		this.territory = territory;
-	}
-
-	// initalize country
-	playerCountry.id = Math.floor(Math.random() * 101);
-	playerCountry.color = new Color(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256));
-	playerCountry.power = 10;
-	playerCountry.territory = new Array(new Array(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9));
+	var playerCountry = new Country("Player's Country", new Color(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)), 10,	new Array(new Point(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9)));
 
 	// ui variables
 	var elementsArray = new Array();
@@ -553,18 +601,21 @@ $(document).ready(function()
 
 	addElement(new Element("btnZoomIn", "button", "+", new Point(canvas.width() - 55, 25), new Color(0,0,0), 0.4, true, 30, 30));
 	addElement(new Element("btnZoomOut", "button", "–", new Point(canvas.width() - 55, 65), new Color(0,0,0), 0.4, true, 30, 30));
-	addElement(new Element("btnPan", "button", "Pan", new Point(canvas.width() - 73, 105), new Color(0,0,0), 0.4, true));
+	addElement(new Element("btnPan", "button", "Pan", new Point(canvas.width() - 146, canvas.height() - 55), new Color(0,0,0), 0.4, true));
+	addElement(new Element("btnClaim", "button", "Claim", new Point(canvas.width() - 88, canvas.height() - 55), new Color(0,0,0), 0.4, true));
 
 	// center origin on country's first square
-	gridOriginX -= getIsometricPoint(playerCountry.territory[0][0], playerCountry.territory[0][1])[0];
-	gridOriginY -= getIsometricPoint(playerCountry.territory[0][0], playerCountry.territory[0][1])[1];
+	origin.x -= getIsometricPoint(playerCountry.territory[0].x, playerCountry.territory[0].y)[0];
+	origin.y -= getIsometricPoint(playerCountry.territory[0].x, playerCountry.territory[0].y)[1];
 
 	// checks mouse click
 	$('canvas#space').click(function(e)
 	{
-		if(isElement(new Point(e.offsetX, e.offsetY)))
+		var clickedPoint = new Point(e.offsetX, e.offsetY);
+
+		if(isElement(clickedPoint))
 		{
-			switch(isElement(new Point(e.offsetX, e.offsetY)).name)
+			switch(isElement(clickedPoint).name)
 			{
 				case 'btnZoomIn':
 					if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
@@ -583,31 +634,53 @@ $(document).ready(function()
 					break;
 
 				case 'btnPan':
-					if(isPanning)
+					if(!isPanning)
 					{
-						isPanning = false;
-						getElement('btnPan').color = new Color(0,0,0);
-					}
-					else
-					{
+						isClaiming = false;
+						getElement('btnClaim').color = new Color(0,0,0);
+
 						isPanning = true;
 						getElement('btnPan').color = new Color(136,136,136);
 					}
 
 					break;
+
+				case 'btnClaim':
+					if(!isClaiming)
+					{
+						isPanning = false;
+						getElement('btnPan').color = new Color(0,0,0);
+
+						isClaiming = true;
+						getElement('btnClaim').color = new Color(136,136,136);
+					}
+
+					break;
 			}
 		}
-		else if(isPanning && originMovable)
+		else if(isClaiming)
 		{
-			originMovable = false;
-		}
-		else if(isPanning)
-		{
-			originMovable = true;
-			mouseX = e.offsetX - gridOriginX;
-			mouseY = e.offsetY - gridOriginY;
+			claim(new Point(getGridPoint(e.offsetX, e.offsetY).x, getGridPoint(e.offsetX, e.offsetY).y));
 		}
 	});
+
+	// checks mouse down
+	$('canvas#space').mousedown(function(e)
+	{
+		if(isPanning && !isElement(new Point(e.offsetX, e.offsetY)))
+		{
+			if(originMovable)
+			{
+				originMovable = false;
+			}
+			else
+			{
+				originMovable = true;
+				mouseX = e.offsetX - origin.x;
+				mouseY = e.offsetY - origin.y;
+			}
+		}
+	})
 
 	// checks mouse move
 	$('canvas#space').mousemove(function(e)
@@ -615,8 +688,7 @@ $(document).ready(function()
 		// move origin on cmd down
 		if(originMovable)
 		{
-			gridOriginX = e.offsetX - mouseX;
-			gridOriginY = e.offsetY - mouseY;
+			origin.set(e.offsetX - mouseX,e.offsetY - mouseY);
 		}
 
 		mouseLocX = e.offsetX;
