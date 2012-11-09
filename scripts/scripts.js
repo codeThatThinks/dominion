@@ -588,7 +588,7 @@ $(document).ready(function()
 	var mouseX, mouseY, mouseLocX, mouseLocY;
 
 	// game variables
-	var playerCountry = new Country("Player's Country", new Color(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)), 10,	new Array(new Point(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9)));
+	var playerCountry = new Country("Player's Country", new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50), 10,	new Array(new Point(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9)));
 
 	// ui variables
 	var elementsArray = new Array();
