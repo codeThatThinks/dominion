@@ -1,15 +1,3 @@
-/*function Point()
-{
-	this.x = x;
-	this.y = y;
-
-	function set(newX, newY)
-	{
-		x = newX;
-		y = newY;
-	}
-}*/
-
 $(document).ready(function()
 {
 	/*
@@ -18,14 +6,167 @@ $(document).ready(function()
 		- height: 540px
 	*/
 
-	/****** objects ******/
-	function Element(name, x, y, width, height)
+	$.extend($.fn.disableTextSelect = function()
 	{
-		this.name = name;
-		this.x = x;
-		this.y = y;
+        return this.each(function()
+        {
+            if($.browser.mozilla)
+            {
+            	//Firefox
+                $(this).css('MozUserSelect','none');
+            }
+            else if($.browser.msie)
+            {
+            	//IE
+                $(this).bind('selectstart',function(){return false;});
+            }
+            else
+            {
+            	//Opera, etc.
+                $(this).mousedown(function(){return false;});
+            }
+        });
+    });
+
+	/****** objects ******/
+	function Point(x, y)
+	{
+		function set(newX, newY)		// change both x and y value
+		{
+			this.x = newX;
+			this.y = newY;
+		}
+
+		this.x = x;						// x value of point
+		this.y = y;						// y value of point
+
+		this.set = set;
+	}
+
+	function Color(red, green, blue)
+	{
+		function formatRGB()			// return formatted rgb(r, g, b) string
+		{
+			return "rgb(" + this.red + "," + this.green + "," + this.blue + ")";
+		}
+
+		function formatRGBA(opacity)	// return formatted rgba(r, g, b, o) string
+		{
+			return "rgba(" + this.red + "," + this.green + "," + this.blue + "," + opacity + ")";
+		}
+
+		this.red = red;					// green value of color
+		this.green = green;				// red value of color
+		this.blue = blue;				// blue value of color
+
+		this.formatRGB = formatRGB;
+		this.formatRGBA = formatRGBA;
+	}
+
+	function Element(name, type, text, point, color, opacity, visible, width, height)
+	{
+		function draw()					// draw element if visible = true
+		{
+			if(this.visible)
+			{
+				switch(this.type)
+				{
+					case 'label':
+						context.fillStyle = this.color.formatRGB();
+						context.fillText(this.text, this.point.x, this.point.y);
+
+						break;
+
+					case 'button':
+						// draw button
+						context.beginPath();
+						context.rect(this.point.x, this.point.y, this.getWidth(), this.getHeight());
+						context.closePath();
+						context.fillStyle = this.color.formatRGBA(this.opacity);
+						context.fill();
+
+						// draw text
+						context.font =  '12pt Helvetica Neue';
+						context.fillStyle = new Color(170,170,170).formatRGB();
+						context.fillText(this.text, this.point.x + (this.getWidth() / 2) - (this.textWidth() / 2), this.point.y + (this.getHeight() / 2) - (this.textHeight() / 2));
+
+						break;
+				}
+			}
+		}
+
+		function getWidth()				// calculate width of element
+		{
+			if(!this.width)
+			{
+				var oldFont = context.font;
+				context.font =  '12pt Helvetica Neue';
+
+				var textWidth = context.measureText(this.text).width;
+				var buttonWidth = textWidth + (20);
+
+				context.font = oldFont;
+				return buttonWidth;
+			}
+			else
+			{
+				return this.width;
+			}
+			
+		}
+
+		function getHeight()				// calculate height of element
+		{
+			/*context.font =  '12pt Helvetica Neue';
+
+			var textHeight = context.measureText(this.text).height;
+			var buttonHeight = textHeight + (15);
+*/
+			if(!this.height)
+			{
+				return this.textHeight() + 15;
+			}
+			else
+			{
+				return this.height;
+			}
+		}
+
+		function textWidth()				// calculate width of text in element
+		{
+			var oldFont = context.font;
+			context.font =  '12pt Helvetica Neue';
+
+			var textWidth = context.measureText(this.text).width;
+
+			context.font = oldFont;
+			return textWidth;
+		}
+
+		function textHeight()				// calculate height of text in element
+		{
+			/*context.font =  '14pt Helvetica Neue';
+
+			var textHeight = context.measureText(this.text).height;
+*/
+			return 20;
+		}
+
+		this.name = name;				// name of element
+		this.type = type;				// type of element; label or button
+		this.text = text;				// text on element
+		this.point = point;				// location on element as Point()
+		this.color = color;				// background color as Color()
+		this.opacity = opacity;			// background opacity as decimal
+		this.visible = visible;			// boolean - is object on screen?
+
+		this.draw = draw;
 		this.width = width;
 		this.height = height;
+		this.getWidth = getWidth;
+		this.getHeight = getHeight;
+		this.textWidth = textWidth;
+		this.textHeight = textHeight;
 	}
 
 
@@ -118,8 +259,8 @@ $(document).ready(function()
 		context.lineTo(gridOriginX + getIsometricPoint(gridX2, gridY2)[0], gridOriginY + getIsometricPoint(gridX2, gridY2)[1]);
 
 		context.closePath();
-		color = color || '170,170,170';
-		context.strokeStyle = 'rgb(' + color + ')';
+		color = color || new Color(170,170,170);
+		context.strokeStyle = color.formatRGB();
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
 		context.stroke();
@@ -146,14 +287,14 @@ $(document).ready(function()
 		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
 		
 		context.closePath();
-		color = color || '170,170,170';
-		context.strokeStyle = 'rgb(' + color + ')';
+		color = color || new Color(170,170,170);
+		context.strokeStyle = color.formatRGB();
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
 		
 		if(fill)
 		{
-			context.fillStyle = 'rgba(' + color + ', 0.4)';
+			context.fillStyle = color.formatRGBA(0.4);
 			context.fill();
 		}
 
@@ -182,14 +323,14 @@ $(document).ready(function()
 		context.lineTo(gridOriginX + getIsometricPoint(gridX, gridY)[0], gridOriginY + getIsometricPoint(gridX, gridY)[1]);
 
 		context.closePath();
-		color = color || '170,170,170';
-		context.strokeStyle = 'rgb(' + color + ')';
+		color = color || new Color(170,170,170);
+		context.strokeStyle = color.formatRGB();
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
 
 		if(fill)
 		{
-			context.fillStyle = 'rgba(' + color + ', 0.4)';
+			context.fillStyle = color.formatRGBA(0.4);
 			context.fill();
 		}
 
@@ -259,8 +400,8 @@ $(document).ready(function()
 		}
 
 		context.closePath();
-		color = color || '170,170,170';
-		context.strokeStyle = 'rgb(' + color + ')';
+		color = color || new Color(170,170,170);
+		context.strokeStyle = color.formatRGB();
 		lineWidth = lineWidth || 3;
 		context.lineWidth = lineWidth;
 		context.stroke();
@@ -268,48 +409,24 @@ $(document).ready(function()
 
 
 	/**** ui functions ****/
-	// draw a button
-	var drawButton = function(x, y, width, height, color, opacity)
+	// draw all elements in the ui array
+	var drawElements = function()
 	{
-		/*
-			x - x location where button will be drawn
-			y - y location where button will be drawn
-			width - width of button
-			height - height of button
-			color - rgb color value of button background
-			opacity - opacity of button background
-		*/
-
-		context.beginPath();
-
-		context.rect(x, y, width, height);
-
-		context.closePath();
-		context.fillStyle = 'rgba(' + color + ', ' + opacity + ')';
-		context.fill();
+		for(var n = 0; n < elementsArray.length; n++)
+		{
+			elementsArray[n].draw();
+		}
 	}
 
 	// add an element to the ui array
-	var addElement = function(name, x, y, width, height)
+	var addElement = function(element)
 	{
-		/*
-			name - name of element to be added
-			x - x location of element to be added
-			y - y location of element to be added
-			width - width of element to be added
-			height - height of element to be added
-		*/
-
-		elementsArray.push(new Element(name, x, y, width, height));
+		elementsArray.push(element);
 	}
 
 	// remove an element from the ui array
 	var removeElement = function(name)
 	{
-		/*
-			name - name of element to be removed
-		*/
-
 		for(var n = 0; n < elementsArray.length; n++)
 		{
 			if(elementsArray[n].name = name)
@@ -320,21 +437,30 @@ $(document).ready(function()
 		}
 	}
 
-	// check if point on inside an element in the elements array
-	var isElement = function(x, y)
+	// return Element object for a given name
+	var getElement = function(name)
 	{
-		/*
-			x - x value of coordinate to check
-			y -y value of coordinate to check
-		*/
-
 		for(var n = 0; n < elementsArray.length; n++)
 		{
-			if(x >= elementsArray[n].x && x <= (elementsArray[n].x + elementsArray[n].width))
+			if(elementsArray[n].name == name)
 			{
-				if(y >= elementsArray[n].y && y <= (elementsArray[n].y + elementsArray[n].height))
+				return elementsArray[n];
+			}
+		}
+
+		return false;
+	}
+
+	// check if point on inside an element in the elements array
+	var isElement = function(point)
+	{
+		for(var n = 0; n < elementsArray.length; n++)
+		{
+			if(point.x >= elementsArray[n].point.x && point.x <= (elementsArray[n].point.x + elementsArray[n].getWidth()))
+			{
+				if(point.y >= elementsArray[n].point.y && point.y <= (elementsArray[n].point.y + elementsArray[n].getHeight()))
 				{
-					return elementsArray[n].name;
+					return elementsArray[n];
 				}
 			}
 		}
@@ -359,52 +485,35 @@ $(document).ready(function()
 		perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 		perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 
-		drawGrid('54,54,54');
+		drawGrid(new Color(54,54,54));
 
 		// draw grid cursor
-		if(mouseLocX && mouseLocY && !isElement(mouseLocX, mouseLocY))
+		if(mouseLocX && mouseLocY && isElement(new Point(mouseLocX, mouseLocY)).type != 'button')
 		{
 			var gridPoint = getGridPoint(mouseLocX, mouseLocY);
-			drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, '68,68,68');
+			drawRect(gridPoint[0], gridPoint[1], gridPoint[0] + 1, gridPoint[1] + 1, new Color(68,68,68));
 		}
 		
 		// draw objects
-		drawRect(-10, -10, 10, 10, '85,85,85');
+		drawRect(-10, -10, 10, 10, new Color(85,85,85));
 		drawRect(playerCountry.territory[0][0], playerCountry.territory[0][1], playerCountry.territory[0][0] + 1, playerCountry.territory[0][1] + 1, playerCountry.color, true);
 
 		// draw UI
-		context.fillStyle = "rgb(" + playerCountry.color + ")";
-		context.font = '12pt Helvetica Neue';
-		context.textBaseline = 'bottom';
-		context.fillText("Country #" + playerCountry.id + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length, 25, canvas.height() - 25);
+		getElement("lblMouse").text = "mouse (" + mouseLocX + "," + mouseLocY + ")";
+		getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocX, mouseLocY)[0] + "," + getGridPoint(mouseLocX, mouseLocY)[1] + ")";
+		getElement("lblElement").text = "on element: " + isElement(new Point(mouseLocX, mouseLocY)).name;
 
-		context.fillStyle = "rgb(170,170,170)";
-		context.fillText("mouse (" + mouseLocX + "," + mouseLocY + ")", 25, 40);
-		context.fillText("isometric (" + getGridPoint(mouseLocX, mouseLocY)[0] + "," + getGridPoint(mouseLocX, mouseLocY)[1] + ")", 25, 60);
-		context.fillText("on element: " + isElement(mouseLocX, mouseLocY), 25, 80);
+		getElement('lblCountry').text = "Country #" + playerCountry.id + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length;
 
-		// zoom constraints: max - 150, min - 20, default - 70, multiples of 10
-		// zoom in button
-		drawButton(canvas.width() - 55, 25, 30, 30, "0,0,0", 0.4);
-		context.fillStyle = "rgb(170,170,170)";
-		context.font = '14pt Helvetica Neue';
-		context.textBaseline = 'top';
-		context.fillText("+", canvas.width() - 46, 27);
-		addElement('btnZoomIn', canvas.width() - 55, 25, 30, 30);
-
-		// zoom out button
-		drawButton(canvas.width() - 55, 65, 30, 30, "0,0,0", 0.4);
-		context.fillStyle = "rgb(170,170,170)";
-		context.font = '14pt Helvetica Neue';
-		context.textBaseline = 'top';
-		context.fillText("–", canvas.width() - 45, 68);
-		addElement('btnZoomOut', canvas.width() - 55, 65, 30, 30);
+		drawElements();
 
 		loop = setTimeout(gameLoop, 20);
 	}
 
 	// set up canvas
 	var canvas = $('canvas#space'), context = canvas.get(0).getContext("2d");
+	$('canvas#space').disableTextSelect();
+	context.textBaseline = 'top';
 
 	// graphics variables
 	var perspectiveAngle = 30;
@@ -415,11 +524,8 @@ $(document).ready(function()
 	var gridOriginX = canvas.width() / 2;	// pixel location of (0, 0)
 	var gridOriginY = canvas.height() / 2;
 
-	var originMovable = false;
+	var originMovable = false, isFullscreen = false, isPanning = false;
 	var mouseX, mouseY, mouseLocX, mouseLocY;
-
-	// ui variables
-	var elementsArray = new Array();
 
 	// game variables
 	var playerCountry = function(id, power, territory)
@@ -432,9 +538,22 @@ $(document).ready(function()
 
 	// initalize country
 	playerCountry.id = Math.floor(Math.random() * 101);
-	playerCountry.color = Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ','  + Math.floor(Math.random() * 256)
+	playerCountry.color = new Color(Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256));
 	playerCountry.power = 10;
 	playerCountry.territory = new Array(new Array(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9));
+
+	// ui variables
+	var elementsArray = new Array();
+
+	// ui elements
+	addElement(new Element("lblMouse", "label", "", new Point(25, 25), new Color(170,170,170), 1, true));
+	addElement(new Element("lblIsometric", "label", "", new Point(25, 45), new Color(170,170,170), 1, true));
+	addElement(new Element("lblElement", "label", "", new Point(25, 65), new Color(170,170,170), 1, true));
+	addElement(new Element("lblCountry", "label", "", new Point(25, canvas.height() - 45), playerCountry.color, 1, true));
+
+	addElement(new Element("btnZoomIn", "button", "+", new Point(canvas.width() - 55, 25), new Color(0,0,0), 0.4, true, 30, 30));
+	addElement(new Element("btnZoomOut", "button", "–", new Point(canvas.width() - 55, 65), new Color(0,0,0), 0.4, true, 30, 30));
+	addElement(new Element("btnPan", "button", "Pan", new Point(canvas.width() - 73, 105), new Color(0,0,0), 0.4, true));
 
 	// center origin on country's first square
 	gridOriginX -= getIsometricPoint(playerCountry.territory[0][0], playerCountry.territory[0][1])[0];
@@ -443,9 +562,9 @@ $(document).ready(function()
 	// checks mouse click
 	$('canvas#space').click(function(e)
 	{
-		if(isElement(e.offsetX, e.offsetY))
+		if(isElement(new Point(e.offsetX, e.offsetY)))
 		{
-			switch(isElement(e.offsetX, e.offsetY))
+			switch(isElement(new Point(e.offsetX, e.offsetY)).name)
 			{
 				case 'btnZoomIn':
 					if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
@@ -462,20 +581,32 @@ $(document).ready(function()
 					}
 
 					break;
+
+				case 'btnPan':
+					if(isPanning)
+					{
+						isPanning = false;
+						getElement('btnPan').color = new Color(0,0,0);
+					}
+					else
+					{
+						isPanning = true;
+						getElement('btnPan').color = new Color(136,136,136);
+					}
+
+					break;
 			}
 		}
-		else if(originMovable)
+		else if(isPanning && originMovable)
 		{
 			originMovable = false;
 		}
-		else
+		else if(isPanning)
 		{
 			originMovable = true;
 			mouseX = e.offsetX - gridOriginX;
 			mouseY = e.offsetY - gridOriginY;
 		}
-
-		return false;
 	});
 
 	// checks mouse move
