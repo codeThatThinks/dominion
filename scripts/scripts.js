@@ -584,7 +584,7 @@ $(document).ready(function()
 	var perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
 	var origin = new Point(canvas.width() / 2, canvas.height() / 2);
 
-	var originMovable = false, isFullscreen = false, isPanning = false, isClaiming = false;
+	var originMovable = false, isFullscreen = false, isPanning = true, isClaiming = false;
 	var mouseX, mouseY, mouseLocX, mouseLocY;
 
 	// game variables
@@ -601,7 +601,7 @@ $(document).ready(function()
 
 	addElement(new Element("btnZoomIn", "button", "+", new Point(canvas.width() - 55, 25), new Color(0,0,0), 0.4, true, 30, 30));
 	addElement(new Element("btnZoomOut", "button", "–", new Point(canvas.width() - 55, 65), new Color(0,0,0), 0.4, true, 30, 30));
-	addElement(new Element("btnPan", "button", "Pan", new Point(canvas.width() - 146, canvas.height() - 55), new Color(0,0,0), 0.4, true));
+	addElement(new Element("btnPan", "button", "Pan", new Point(canvas.width() - 146, canvas.height() - 55), new Color(136,136,136), 0.4, true));
 	addElement(new Element("btnClaim", "button", "Claim", new Point(canvas.width() - 88, canvas.height() - 55), new Color(0,0,0), 0.4, true));
 
 	// center origin on country's first square
