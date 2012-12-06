@@ -86,7 +86,7 @@ $(document).ready(function()
 						context.fill();
 
 						// draw text
-						context.font =  '12pt Helvetica Neue';
+						context.font =  '13pt Cabin';
 						context.fillStyle = new Color(170,170,170).formatRGB();
 						context.fillText(this.text, this.point.x + (this.getWidth() / 2) - (this.textWidth() / 2), this.point.y + (this.getHeight() / 2) - (this.textHeight() / 2));
 
@@ -100,7 +100,7 @@ $(document).ready(function()
 			if(!this.width)
 			{
 				var oldFont = context.font;
-				context.font =  '12pt Helvetica Neue';
+				context.font =  '13pt Cabin';
 
 				var textWidth = context.measureText(this.text).width;
 				var buttonWidth = textWidth + (20);
@@ -117,7 +117,7 @@ $(document).ready(function()
 
 		function getHeight()				// calculate height of element
 		{
-			/*context.font =  '12pt Helvetica Neue';
+			/*context.font =  '13pt Cabin';
 
 			var textHeight = context.measureText(this.text).height;
 			var buttonHeight = textHeight + (15);
@@ -135,7 +135,7 @@ $(document).ready(function()
 		function textWidth()				// calculate width of text in element
 		{
 			var oldFont = context.font;
-			context.font =  '12pt Helvetica Neue';
+			context.font =  '13pt Cabin';
 
 			var textWidth = context.measureText(this.text).width;
 
@@ -145,7 +145,7 @@ $(document).ready(function()
 
 		function textHeight()				// calculate height of text in element
 		{
-			/*context.font =  '14pt Helvetica Neue';
+			/*context.font =  '14pt Cabin';
 
 			var textHeight = context.measureText(this.text).height;
 */

@@ -9,7 +9,7 @@
 body
 {
 	margin: 35px 35px 35px 35px;
-	font: 13pt 'Helvetica Neue';
+	font: 12pt 'Cabin';
 	font-weight: 200;
 	color: #555555;
 	-webkit-font-smoothing: antialiased;
@@ -37,14 +37,14 @@ canvas#space
 
 @font-face
 {
-	font-family: 'Helvetica Neue';
-	src: url('font_HelveticaNeueLight.ttf');
-	font-weight: 200;
+	font-family: 'Cabin';
+	src: url('font_Cabin.otf.');
+	font-weight: 400;
 }
 
 @font-face
 {
-	font-family: 'Helvetica Neue';
-	src: url('font_HelveticaNeueUltraLight.ttf');
-	font-weight: 100;
+	font-family: 'Cabin';
+	src: url('font_Cabin Medium.otf');
+	font-weight: 500;
 }
