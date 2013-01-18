@@ -551,9 +551,9 @@ $(document).ready(function()
 		drawGrid(new Color(54,54,54));
 
 		// draw grid cursor
-		if(mouseLocX && mouseLocY && isElement(new Point(mouseLocX, mouseLocY)).type != 'button')
+		if(mouseLocation.x && mouseLocation.y && isElement(mouseLocation).type != 'button')
 		{
-			var gridPoint = getGridPoint(mouseLocX, mouseLocY);
+			var gridPoint = getGridPoint(mouseLocation.x, mouseLocation.y);
 			drawRect(gridPoint.x, gridPoint.y, gridPoint.x + 1, gridPoint.y + 1, new Color(68,68,68));
 		}
 		
@@ -562,9 +562,9 @@ $(document).ready(function()
 		drawTerritory();
 
 		// draw UI
-		getElement("lblMouse").text = "mouse (" + mouseLocX + "," + mouseLocY + ")";
-		getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocX, mouseLocY).x + "," + getGridPoint(mouseLocX, mouseLocY).y + ")";
-		getElement("lblElement").text = "on element: " + isElement(new Point(mouseLocX, mouseLocY)).name;
+		getElement("lblMouse").text = "mouse (" + mouseLocation.x + "," + mouseLocation.y + ")";
+		getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocation.x, mouseLocation.y).x + "," + getGridPoint(mouseLocation.x, mouseLocation.y).y + ")";
+		getElement("lblElement").text = "on element: " + isElement(mouseLocation).name;
 		getElement('lblCountry').text = playerCountry.name + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length;
 
 		drawElements();
@@ -585,7 +585,7 @@ $(document).ready(function()
 	var origin = new Point(canvas.width() / 2, canvas.height() / 2);
 
 	var originMovable = false, isFullscreen = false, isPanning = true, isClaiming = false;
-	var mouseX, mouseY, mouseLocX, mouseLocY;
+	var currentMouseLocation = new Point, mouseLocation = new Point;
 
 	// game variables
 	var playerCountry = new Country("Player's Country", new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50), 10,	new Array(new Point(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9)));
@@ -611,11 +611,11 @@ $(document).ready(function()
 	// checks mouse click
 	$('canvas#space').click(function(e)
 	{
-		var clickedPoint = new Point(e.offsetX, e.offsetY);
+		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
 
-		if(isElement(clickedPoint))
+		if(isElement(newMouseLocation))
 		{
-			switch(isElement(clickedPoint).name)
+			switch(isElement(newMouseLocation).name)
 			{
 				case 'btnZoomIn':
 					if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
@@ -660,14 +660,16 @@ $(document).ready(function()
 		}
 		else if(isClaiming)
 		{
-			claim(new Point(getGridPoint(e.offsetX, e.offsetY).x, getGridPoint(e.offsetX, e.offsetY).y));
+			claim(new Point(getGridPoint(e.layerX, e.layerY).x, getGridPoint(e.layerX, e.layerY).y));
 		}
 	});
 
 	// checks mouse down
 	$('canvas#space').mousedown(function(e)
 	{
-		if(isPanning && !isElement(new Point(e.offsetX, e.offsetY)))
+		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+
+		if(isPanning && !isElement(newMouseLocation))
 		{
 			if(originMovable)
 			{
@@ -676,8 +678,8 @@ $(document).ready(function()
 			else
 			{
 				originMovable = true;
-				mouseX = e.offsetX - origin.x;
-				mouseY = e.offsetY - origin.y;
+				currentMouseLocation.x = newMouseLocation.x - origin.x;
+				currentMouseLocation.y = newMouseLocation.y - origin.y;
 			}
 		}
 	})
@@ -685,14 +687,15 @@ $(document).ready(function()
 	// checks mouse move
 	$('canvas#space').mousemove(function(e)
 	{
-		// move origin on cmd down
+		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+
 		if(originMovable)
 		{
-			origin.set(e.offsetX - mouseX,e.offsetY - mouseY);
+			origin.set(newMouseLocation.x - currentMouseLocation.x, newMouseLocation.y - currentMouseLocation.y);
 		}
 
-		mouseLocX = e.offsetX;
-		mouseLocY = e.offsetY;
+		mouseLocation.x = newMouseLocation.x;
+		mouseLocation.y = newMouseLocation.y;
 	});
 
 	gameLoop();
