@@ -38,7 +38,7 @@ canvas#space
 @font-face
 {
 	font-family: 'Cabin';
-	src: url('font_Cabin.otf.');
+	src: url('font_Cabin.otf');
 	font-weight: 400;
 }
 
