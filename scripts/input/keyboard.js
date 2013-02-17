@@ -24,4 +24,22 @@ I should get better at comments.
 						getElement('btnClaim').color = new Color(136,136,136);
 		}
 		
+		if(e.keyCode == 49)
+		{
+					if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
+					{
+						gridSpacing -= 10;
+					}
+		}
+		
+		if(e.keyCode == 50)
+		{
+					if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
+					{
+						gridSpacing += 10;
+					}		
+		}
+		
 	});	
+	
+	//none
