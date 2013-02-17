@@ -179,6 +179,48 @@ function Element(name, type, text, point, color, opacity, visible, width, height
 	this.textHeight = textHeight;
 }
 
+
+/**** Game objects ****/
+
+/**
+ * new Entity(str name, Point point, bool visible)
+ * creates entity and adds it to entity array
+ *     this.name - name of element
+ *     this.image - entity image
+ *     this.point - entity location
+ *     this.visible - is entity visible on screen? (true or false)
+ */
+function Entity(name, image, point, visible)
+{
+	function draw()					// draw entity if visible = true
+	{
+		if(this.visible)
+		{
+			context.drawImage(this.image, origin.x + getIsometricPoint(this.point.x, this.point.y)[0] - ((this.image.width * gridSpacing / 150) / 2), origin.y + getIsometricPoint(this.point.x, this.point.y)[1] - ((this.image.height * gridSpacing / 150) - perspectiveHeight), (this.image.width * gridSpacing / 150), (this.image.height * gridSpacing / 150));
+		}
+	}
+
+	function getWidth()				// calculate width of entity
+	{
+		return this.image.width;
+		
+	}
+
+	function getHeight()			// calculate height of entity
+	{
+		return this.image.height;
+	}
+
+	this.name = name;				// name of element
+	this.image = image;				// entity image
+	this.point = point;				// location of entity as Point()
+	this.visible = visible;			// boolean - is object on screen?
+
+	this.draw = draw;
+	this.getWidth = getWidth;
+	this.getHeight = getHeight;
+}
+
 function Country(name, color, power, territory)
 {
 	this.name = name;

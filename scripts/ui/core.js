@@ -3,6 +3,10 @@
  * Author: Ian Glen <codeThatThinks@gmail.com>
  *********/
 
+/* UI elements array */
+var elementsArray = new Array();
+
+
 /**
  * window.drawElements()
  * draws all visible elements in the UI elements array
@@ -28,7 +32,7 @@ var addElement = function(element)
 
 
 /**
- * window.remove(string name)
+ * window.removeElement(string name)
  * removes an element from the UI elements array
  *     name - name of the element to be removed
  */

@@ -4,6 +4,16 @@
  *********/
 
 /**
+ * entity resources
+ */
+var building = new Image();
+building.src = "./assets/entities/building.png";
+
+var factory = new Image();
+factory.src = "./assets/entities/factory.png";
+
+
+/**
  * game variables
  */
 $(document).ready(function()
@@ -33,6 +43,10 @@ $(document).ready(function()
 	addElement(new Element("btnZoomOut", "button", "–", new Point(canvas.width() - 55, 65), new Color(0,0,0), 0.4, true, 30, 30));
 	addElement(new Element("btnPan", "button", "Pan", new Point(canvas.width() - 146, canvas.height() - 55), new Color(136,136,136), 0.4, true));
 	addElement(new Element("btnClaim", "button", "Claim", new Point(canvas.width() - 88, canvas.height() - 55), new Color(0,0,0), 0.4, true));
+
+	// entities
+	addEntity(new Entity("building", building, new Point(2, 1), true));
+	addEntity(new Entity("factory", factory, new Point(4,5), true));
 
 	// center origin on country's first square
 	origin.x -= getIsometricPoint(playerCountry.territory[0].x, playerCountry.territory[0].y)[0];
@@ -64,6 +78,13 @@ var gameLoop = function()
 	// draw objects
 	drawRect(-10, -10, 10, 10, new Color(85,85,85));
 	drawTerritory();
+
+
+	drawRect(0,0, 1, 1, new Color(255,255,255));
+
+	// draw entities
+	drawEntities();
+
 
 	// draw UI
 	getElement("lblMouse").text = "mouse (" + mouseLocation.x + "," + mouseLocation.y + ")";
