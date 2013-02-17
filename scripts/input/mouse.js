@@ -77,16 +77,18 @@ $(document).ready(function()
 
 		if(isPanning && !isElement(newMouseLocation))
 		{
-			if(originMovable)
-			{
-				originMovable = false;
-			}
-			else
-			{
 				originMovable = true;
 				currentMouseLocation.x = newMouseLocation.x - origin.x;
 				currentMouseLocation.y = newMouseLocation.y - origin.y;
-			}
+		}
+	});
+	
+	canvas.mouseup(function(e) {
+			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+			
+					if(isPanning && !isElement(newMouseLocation))
+		{
+				originMovable = false;
 		}
 	});
 });
