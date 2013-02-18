@@ -1,6 +1,6 @@
 /**********
  * Core UI Functions
- * Author: Ian Glen <codeThatThinks@gmail.com>
+ * Author: Ian Glen <ian@ianglen.me>
  *********/
 
 /* UI elements array */

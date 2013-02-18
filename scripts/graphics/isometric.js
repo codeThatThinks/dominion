@@ -1,6 +1,6 @@
 /**********
  * Isometric Functions
- * Author: Ian Glen <codeThatThinks@gmail.com>
+ * Author: Ian Glen <ian@ianglen.me>
  *********/
 
 /**
