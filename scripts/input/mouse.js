@@ -75,7 +75,7 @@ $(document).ready(function()
 	{
 		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
 
-		if(isPanning && !isElement(newMouseLocation))
+		if(isPanning && !isElement(newMouseLocation) && e.which == 1)
 		{
 				originMovable = true;
 				currentMouseLocation.x = newMouseLocation.x - origin.x;
