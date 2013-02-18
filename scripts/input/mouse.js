@@ -83,12 +83,13 @@ $(document).ready(function()
 		}
 	});
 	
-	canvas.mouseup(function(e) {
-			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+	canvas.mouseup(function(e)
+	{
+		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
 			
-					if(isPanning && !isElement(newMouseLocation))
+		if(isPanning && !isElement(newMouseLocation))
 		{
-				originMovable = false;
+			originMovable = false;
 		}
 	});
 });
