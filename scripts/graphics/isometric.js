@@ -5,7 +5,7 @@
 
 /**
  * window.getIsometricPoint(int x, int y)
- * converts grid coords to real-world screen coords
+ * converts grid coords to real-world screen coords, relative to origin
  *     x - isometric grid x
  *     y - isometric grid y
  */
@@ -29,8 +29,25 @@ var getGridPoint = function(posX, posY)
 	posX -= origin.x;
 	posY -= origin.y;
 
-	var gridX = Math.floor((posY / perspectiveHeight) + ((posX / perspectiveWidth)));
-	var gridY = Math.floor((posY / perspectiveHeight) - ((posX / perspectiveWidth)));
+	var gridX = Math.floor((posY / perspectiveHeight) + (posX / perspectiveWidth));
+	var gridY = Math.floor((posY / perspectiveHeight) - (posX / perspectiveWidth));
+
+	return new Point(gridX, gridY);
+}
+
+/**
+ * window.getRealGridPoint(int x, int y)
+ * converts screen coords to isometric grid coords without rounding
+ *     x - real-world screen x
+ *     y - real-world screen y
+ */
+var getRealGridPoint = function(posX, posY)
+{
+	posX -= origin.x;
+	posY -= origin.y;
+
+	var gridX = (posY / perspectiveHeight) + (posX / perspectiveWidth);
+	var gridY = (posY / perspectiveHeight) - (posX / perspectiveWidth);
 
 	return new Point(gridX, gridY);
 }

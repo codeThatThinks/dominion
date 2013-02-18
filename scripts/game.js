@@ -49,8 +49,7 @@ $(document).ready(function()
 	addEntity(new Entity("factory", factory, new Point(4,5), true));
 
 	// center origin on country's first square
-	origin.x -= getIsometricPoint(playerCountry.territory[0].x, playerCountry.territory[0].y)[0];
-	origin.y -= getIsometricPoint(playerCountry.territory[0].x, playerCountry.territory[0].y)[1];
+	centerGrid(playerCountry.territory[0]);
 });
 
 /**

@@ -91,3 +91,14 @@ var drawGrid = function(color, lineWidth)
 	context.lineWidth = lineWidth;
 	context.stroke();
 }
+
+/**
+ * window.centerGrid(Point point)
+ * centers grid point on screen
+ *     point - real-world screen point to be centered
+ */
+var centerGrid = function(point)
+{
+	origin.x += (canvas.width() / 2) - (getIsometricPoint(point.x, point.y)[0] + origin.x);
+	origin.y += (canvas.height() / 2) - (getIsometricPoint(point.x, point.y)[1] + origin.y);
+}
