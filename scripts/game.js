@@ -78,9 +78,6 @@ var gameLoop = function()
 	drawRect(-10, -10, 10, 10, new Color(85,85,85));
 	drawTerritory();
 
-
-	drawRect(0,0, 1, 1, new Color(255,255,255));
-
 	// draw entities
 	drawEntities();
 
