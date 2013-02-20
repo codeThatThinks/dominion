@@ -23,7 +23,7 @@ $(document).keyup(function(e)
 		getElement('btnClaim').color = new Color(136,136,136);
 	}
 
-	if(e.keyCode == 49)
+	if(e.keyCode == 49 || e.keyCode == 173)
 	{
 		if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
 		{
@@ -31,7 +31,7 @@ $(document).keyup(function(e)
 		}
 	}
 
-	if(e.keyCode == 50)
+	if(e.keyCode == 50 || e.keyCode == 61)
 	{
 		if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
 		{
