@@ -12,7 +12,6 @@ building.src = "./assets/entities/building.png";
 var factory = new Image();
 factory.src = "./assets/entities/factory.png";
 
-
 /**
  * game variables
  */
@@ -37,6 +36,7 @@ $(document).ready(function()
 	addElement(new Element("lblMouse", "label", "", new Point(25, 25), new Color(170,170,170), 1, true));
 	addElement(new Element("lblIsometric", "label", "", new Point(25, 45), new Color(170,170,170), 1, true));
 	addElement(new Element("lblElement", "label", "", new Point(25, 65), new Color(170,170,170), 1, true));
+	addElement(new Element("lblMultiplayer", "label", "Connected to server.", new Point(25, 85), new Color(170,170,170), 1, false));
 	addElement(new Element("lblCountry", "label", "", new Point(25, canvas.height() - 45), playerCountry.color, 1, true));
 
 	addElement(new Element("btnZoomIn", "button", "+", new Point(canvas.width() - 55, 25), new Color(0,0,0), 0.4, true, 30, 30));
@@ -86,7 +86,7 @@ var gameLoop = function()
 	getElement("lblMouse").text = "mouse (" + mouseLocation.x + "," + mouseLocation.y + ")";
 	getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocation.x, mouseLocation.y).x + "," + getGridPoint(mouseLocation.x, mouseLocation.y).y + ")";
 	getElement("lblElement").text = "on element: " + isElement(mouseLocation).name;
-	getElement('lblCountry').text = playerCountry.name + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length;
+	getElement("lblCountry").text = playerCountry.name + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length;
 
 	drawElements();
 
