@@ -90,6 +90,8 @@ var gameLoop = function()
 
 	drawElements();
 
+	connectToServer();
+
 	loop = setTimeout(gameLoop, 20);
 }
 
