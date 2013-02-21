@@ -23,7 +23,7 @@ $(document).keyup(function(e)
 		getElement('btnClaim').color = new Color(136,136,136);
 	}
 
-	if(e.keyCode == 49 || e.keyCode == 173)
+	if(e.keyCode == 49 || e.keyCode == 173)							// When 1 or - is pressed zoom out.
 	{
 		if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
 		{
@@ -31,11 +31,11 @@ $(document).keyup(function(e)
 		}
 	}
 
-	if(e.keyCode == 50 || e.keyCode == 61)
+	if(e.keyCode == 50 || e.keyCode == 61)							// When 2 or = is pressed zoom in.
 	{
 		if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
 		{
 			gridSpacing += 10;
-		}		
+		}
 	}
 });
