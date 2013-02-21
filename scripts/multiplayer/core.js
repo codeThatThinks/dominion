@@ -12,7 +12,7 @@ var multiplayerSocket;
 */
 var connectToServer = function()
 {
-	multiplayerSocket = io.connect('http://cloud.ianglen.me');
+	multiplayerSocket = io.connect('http://dominion-server.ianglen.me');
 
 	multiplayerSocket.on('connect', function()
 	{
