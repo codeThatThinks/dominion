@@ -221,7 +221,7 @@ function Entity(name, image, point, visible)
 	this.getHeight = getHeight;
 }
 
-function Country(name, color, power, territory)
+function Country(name, color, territory)
 {
 	this.name = name;
 	this.color = color;
