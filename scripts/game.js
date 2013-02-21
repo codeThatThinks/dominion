@@ -27,7 +27,7 @@ $(document).ready(function()
 	window.mouseLocation = new Point;
 
 	// game variables
-	window.playerCountry = new Country("Player's Country", new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50), 10,	new Array(new Point(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9)));
+	window.playerCountry = new Country("Player's Country", new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50), new Array(new Point(Math.floor(Math.random() * 19) - 9, Math.floor(Math.random() * 19) - 9)));
 
 	// ui variables
 	window.elementsArray = new Array();
@@ -86,7 +86,7 @@ var gameLoop = function()
 	getElement("lblMouse").text = "mouse (" + mouseLocation.x + "," + mouseLocation.y + ")";
 	getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocation.x, mouseLocation.y).x + "," + getGridPoint(mouseLocation.x, mouseLocation.y).y + ")";
 	getElement("lblElement").text = "on element: " + isElement(mouseLocation).name;
-	getElement("lblCountry").text = playerCountry.name + " - Power: " + playerCountry.power + " - Territory: " + playerCountry.territory.length;
+	getElement("lblCountry").text = playerCountry.name + " - Territory: " + playerCountry.territory.length;
 
 	drawElements();
 

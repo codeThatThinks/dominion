@@ -25,11 +25,7 @@ var claim = function(point)
 {
 	if(!isClaimed(point))
 	{
-		if(playerCountry.power - 2 >= 0)
-		{
-			playerCountry.territory.push(point);
-			playerCountry.power -= 2;
-		}
+		playerCountry.territory.push(point);
 	}
 	else
 	{
@@ -50,7 +46,6 @@ var unclaim = function(point)
 		if(playerCountry.territory[n].x == point.x && playerCountry.territory[n].y == point.y)
 		{
 			playerCountry.territory.splice(n, 1);
-			playerCountry.power += 1;
 		}
 	}
 }

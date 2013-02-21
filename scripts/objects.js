@@ -225,6 +225,5 @@ function Country(name, color, power, territory)
 {
 	this.name = name;
 	this.color = color;
-	this.power = power;
 	this.territory = territory;
 }
