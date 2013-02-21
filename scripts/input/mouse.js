@@ -59,7 +59,7 @@ $(document).ready(function()
 		}
 		else if(isClaiming)
 		{
-			claim(getGridPoint(newMouseLocation.x, newMouseLocation.y));
+			claim(getGridPoint(newMouseLocation.x, newMouseLocation.y), countries[0].name);
 		}
 	});
 });

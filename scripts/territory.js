@@ -3,15 +3,20 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
+var territory = new Array();
+
 /**
  * window.drawTerritory()
  * draws claimed territory in territory array
  */
 var drawTerritory = function()
 {
-	for(var n = 0; n < playerCountry.territory.length; n++)
+	for(var n = 0; n < territory.length; n++)
 	{
-		drawRect(playerCountry.territory[n].x, playerCountry.territory[n].y, playerCountry.territory[n].x + 1, playerCountry.territory[n].y + 1, playerCountry.color, true);
+		if(getCountry(territory[n].country))
+		{
+			drawRect(territory[n].point.x, territory[n].point.y, territory[n].point.x + 1, territory[n].point.y + 1, getCountry(territory[n].country).color, true);
+		}
 	}
 }
 
@@ -21,15 +26,15 @@ var drawTerritory = function()
  * claims territory by adding it to the territory array
  *     point - isometric grid point of territory to be added
  */
-var claim = function(point)
+var claim = function(point, country)
 {
 	if(!isClaimed(point))
 	{
-		playerCountry.territory.push(point);
+		territory.push(new territoryUnit(point, country));
 	}
 	else
 	{
-		unclaim(point);
+		unclaim(point, country);
 	}
 }
 
@@ -39,13 +44,13 @@ var claim = function(point)
  * unclaims territory by removing it from the territory array
  *     point - isometric grid point of territory to be removed
  */
-var unclaim = function(point)
+var unclaim = function(point, country)
 {
-	for(var n = 0; n < playerCountry.territory.length; n++)
+	for(var n = 0; n < territory.length; n++)
 	{
-		if(playerCountry.territory[n].x == point.x && playerCountry.territory[n].y == point.y)
+		if(territory[n].point.x == point.x && territory[n].point.y == point.y && territory[n].country == country)
 		{
-			playerCountry.territory.splice(n, 1);
+			territory.splice(n, 1);
 		}
 	}
 }
@@ -58,13 +63,29 @@ var unclaim = function(point)
  */
 var isClaimed = function(point)
 {
-	for(var n = 0; n < playerCountry.territory.length; n++)
+	for(var n = 0; n < territory.length; n++)
 	{
-		if(playerCountry.territory[n].x == point.x && playerCountry.territory[n].y == point.y)
+		if(territory[n].point.x == point.x && territory[n].point.y == point.y)
 		{
 			return true;
 		}
 	}
 
 	return false;
+}
+
+
+var numTerritory = function(country)
+{
+	var count = 0;
+
+	for(var n = 0; n < territory.length; n++)
+	{
+		if(territory[n].country == country)
+		{
+			count++;
+		}
+	}
+
+	return count++;
 }
