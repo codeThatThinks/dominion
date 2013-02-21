@@ -31,6 +31,11 @@ var claim = function(point, country)
 	if(!isClaimed(point))
 	{
 		territory.push(new territoryUnit(point, country));
+
+		if(country == countries[0].name)
+		{
+			claimOnServer(point);
+		}
 	}
 	else
 	{
@@ -51,6 +56,11 @@ var unclaim = function(point, country)
 		if(territory[n].point.x == point.x && territory[n].point.y == point.y && territory[n].country == country)
 		{
 			territory.splice(n, 1);
+
+			if(country == countries[0].name)
+			{
+				unclaimOnServer(point);
+			}
 		}
 	}
 }
