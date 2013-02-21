@@ -45,12 +45,25 @@ function Color(red, green, blue)
 		return "rgba(" + this.red + "," + this.green + "," + this.blue + "," + opacity + ")";
 	}
 
+	function fromRGB(string)
+	{
+		var regexp = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
+
+		string = string.replace(/ /g,'');
+    	string = string.toLowerCase();
+
+		this.red = string.match(regexp)[1];
+		this.green = string.match(regexp)[2];
+		this.blue = string.match(regexp)[3];
+	}
+
 	this.red = red;
 	this.green = green;
 	this.blue = blue;
 
 	this.formatRGB = formatRGB;
 	this.formatRGBA = formatRGBA;
+	this.fromRGB = fromRGB;
 }
 
 
