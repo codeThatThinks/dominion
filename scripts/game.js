@@ -12,6 +12,8 @@ building.src = "./assets/entities/building.png";
 var factory = new Image();
 factory.src = "./assets/entities/factory.png";
 
+var farmbuilding = new Image();
+farmbuilding.src = "./assets/entities/farmbuilding.png";
 /**
  * game variables
  */
@@ -46,7 +48,8 @@ $(document).ready(function()
 
 	// entities
 	addEntity(new Entity("building", building, new Point(2, 1), true));
-	addEntity(new Entity("factory", factory, new Point(4,5), true));
+	addEntity(new Entity("factory", factory, new Point(4, 5), true));
+	addEntity(new Entity("farmbuilding", farmbuilding, new Point(8, 6), true));
 
 	// ready, connect to server
 	connectToServer();
