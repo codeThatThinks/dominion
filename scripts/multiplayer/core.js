@@ -4,7 +4,6 @@
  *********/
 
 var multiplayerServer = io.connect('http://dominion-server.ianglen.me');
-io.set('transports', ['xhr-polling']);
 
 
 /**
