@@ -3,9 +3,11 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
+var multiplayerServer;
+
 $(document).ready(function()
 {
-	window.multiplayerServer = io.connect('http://dominion-server.ianglen.me');
+	multiplayerServer = io.connect('http://dominion-server.ianglen.me');
 });
 
 
