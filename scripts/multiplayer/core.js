@@ -13,7 +13,7 @@ $(document).ready(function()
 * window.connectToServer()
 * connects to Node.js server and sends country and color
 */
-var connectToServer() = function()
+var connectToServer = function()
 {
 	multiplayerServer.on('connect', function()
 	{
