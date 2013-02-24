@@ -7,7 +7,10 @@ var countries = new Array();						// countries[0] is always player's country
 
 var addCountry = function(name, color)
 {
-	countries.push(new Country(name, color));
+	if(!getCountry(name))
+	{
+		countries.push(new Country(name, color));
+	}
 }
 
 var removeCountry = function(name)

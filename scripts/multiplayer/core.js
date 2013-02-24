@@ -3,7 +3,7 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
-var multiplayerServer = io.connect('http://dominion-server.ianglen.me');
+var multiplayerServer;
 
 
 /**
@@ -12,15 +12,35 @@ var multiplayerServer = io.connect('http://dominion-server.ianglen.me');
 */
 var connectToServer = function()
 {
+	multiplayerServer = io.connect('http://dominion-server.ianglen.me');
+
 	multiplayerServer.on('connect', function()
 	{
-		multiplayerServer.emit('connect', countries[0].color.formatRGB(), function(data)
+		multiplayerServer.emit('setup', countries[0].name, JSON.stringify(countries[0].color));
+	});
+
+	multiplayerServer.on('sendCountries', function(countriesArray)
+	{
+		var countriesArrayParsed = JSON.parse(countriesArray);
+
+		for(var n = 0; n < countriesArrayParsed.length; n++)
 		{
-			if(data == 'success')
-			{
-				getElement("lblMultiplayer").visible = true;
-			}
-		});
+			addCountry(countriesArrayParsed[n].name, new Color(countriesArrayParsed[n].color.red, countriesArrayParsed[n].color.green, countriesArrayParsed[n].color.blue));
+		}
+
+		multiplayerServer.emit('sendCountriesSuccess');
+	});
+
+	multiplayerServer.on('sendTerritory', function(territoryArray)
+	{
+		var territoryArrayParse = JSON.parse(territoryArray);
+
+		for(var n = 0; n < territoryArrayParse.length; n++)
+		{
+			claim(territoryArrayParse[n].point, territoryArrayParse[n].country);
+		}
+
+		getElement("lblMultiplayer").visible = true;
 	});
 }
 
@@ -50,7 +70,8 @@ $(document).ready(function()
 {
 	multiplayerServer.on('addCountry', function(name, color)
 	{
-		addCountry(name, new Color().fromRGB(color));
+		var colorParsed = JSON.parse(color);
+		addCountry(name, new Color(colorParsed.red, colorParsed.green, colorParsed.blue));
 	});
 
 	multiplayerServer.on('removeCountry', function(country)
