@@ -3,7 +3,9 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
+/* variables */
 var multiplayerServer;
+var isOnline = false;
 
 
 /**
@@ -40,7 +42,7 @@ var connectToServer = function()
 			claim(territoryArrayParse[n].point, territoryArrayParse[n].country);
 		}
 
-		getElement("lblMultiplayer").visible = true;
+		isOnline = true;
 	});
 }
 
@@ -93,5 +95,10 @@ $(document).ready(function()
 	multiplayerServer.on('unclaim', function(x, y, country)
 	{
 		unclaim(new Point(x,y), country);
+	});
+
+	multiplayerServer.on('disconnect', function()
+	{
+		isOnline = false;
 	});
 });

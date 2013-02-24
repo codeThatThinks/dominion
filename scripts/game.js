@@ -38,7 +38,7 @@ $(document).ready(function()
 	addElement(new Element("lblMouse", "label", "", new Point(25, 25), new Color(170,170,170), 1, true));
 	addElement(new Element("lblIsometric", "label", "", new Point(25, 45), new Color(170,170,170), 1, true));
 	addElement(new Element("lblElement", "label", "", new Point(25, 65), new Color(170,170,170), 1, true));
-	addElement(new Element("lblMultiplayer", "label", "Connected to server.", new Point(25, 85), new Color(170,170,170), 1, false));
+	addElement(new Element("lblMultiplayer", "label", "", new Point(25, 85), new Color(170,170,170), 1, false));
 	addElement(new Element("lblCountry", "label", "", new Point(25, canvas.height() - 45), countries[0].color, 1, true));
 
 	addElement(new Element("btnZoomIn", "button", "+", new Point(canvas.width() - 55, 25), new Color(0,0,0), 0.4, true, 30, 30));
@@ -90,6 +90,17 @@ var gameLoop = function()
 	getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocation.x, mouseLocation.y).x + "," + getGridPoint(mouseLocation.x, mouseLocation.y).y + ")";
 	getElement("lblElement").text = "on element: " + isElement(mouseLocation).name;
 	getElement("lblCountry").text = countries[0].name + " - Territory: " + numTerritory(countries[0].name);
+
+	if(isOnline)
+	{
+		getElement("lblMultiplayer").text = "Connected to server";
+		getElement("lblMultiplayer").visible = true;
+	}
+	else
+	{
+		getElement("lblMultiplayer").text = "Disconnected";
+		getElement("lblMultiplayer").visible = true;
+	}
 
 	drawElements();
 
