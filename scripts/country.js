@@ -20,7 +20,7 @@ var removeCountry = function(name)
 	{
 		if(territory[n].country == name)
 		{
-			unclaim(territory[n].point);
+			unclaim(territory[n].point, name);
 		}
 	}
 
