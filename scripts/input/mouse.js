@@ -57,7 +57,7 @@ $(document).ready(function()
 					break;
 			}
 		}
-		else if(isClaiming)
+		else if(isClaiming && isOnline)
 		{
 			claim(getGridPoint(newMouseLocation.x, newMouseLocation.y), countries[0].name);
 		}
