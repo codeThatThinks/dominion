@@ -82,7 +82,7 @@ $(document).ready(function()
 
 	multiplayerServer.on('removeCountry', function(country)
 	{
-		removeCountry(name);
+		removeCountry(country);
 	});
 
 	multiplayerServer.on('claim', function(x, y, country)
