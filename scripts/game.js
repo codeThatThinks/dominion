@@ -96,6 +96,11 @@ var gameLoop = function()
 		getElement("lblMultiplayer").text = "Connected to server";
 		getElement("lblMultiplayer").visible = true;
 	}
+	else if(isDown)
+	{
+		getElement("lblMultiplayer").text = "Server is down";
+		getElement("lblMultiplayer").visible = true;
+	}
 	else
 	{
 		getElement("lblMultiplayer").text = "Disconnected";
