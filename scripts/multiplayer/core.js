@@ -68,6 +68,12 @@ var unclaimOnServer = function(point)
 /** events **/
 $(document).ready(function()
 {
+	// close connection on window close
+	$(window).bind('beforeunload', function()
+	{
+		multiplayerServer.disconnect();
+	});
+
 	multiplayerServer.on('addCountry', function(name, color)
 	{
 		var colorParsed = JSON.parse(color);
