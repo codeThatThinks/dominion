@@ -6,6 +6,8 @@
 		</title>
 
 		<link rel="stylesheet" href="assets/style.css" />
+
+		<!-- external libraries -->
 		<script type="text/javascript" src="scripts/jquery.js"></script>
 		<script type="text/javascript" src="http://dominion-server.ianglen.me/socket.io/socket.io.js"></script>
 
@@ -22,14 +24,14 @@
 		<script type="text/javascript" src="scripts/graphics/territory.js"></script>
 
 		<script type="text/javascript" src="scripts/input/mouse.js"></script>
-        <script type="text/javascript" src="scripts/input/keyboard.js"></script>
-        <script type="text/javascript" src="scripts/input/scrollwheel.js"></script>
+		<script type="text/javascript" src="scripts/input/keyboard.js"></script>
+		<script type="text/javascript" src="scripts/input/scrollwheel.js"></script>
 
 		<script type="text/javascript" src="scripts/ui/core.js"></script>
 		<script type="text/javascript" src="scripts/ui/mouse.js"></script>
 
 		<script type="text/javascript" src="scripts/multiplayer/core.js"></script>
-        <script type="text/javascript" src="scripts/multiplayer/login.js"></script>
+		<script type="text/javascript" src="scripts/multiplayer/login.js"></script>
 
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=1024" />
@@ -38,27 +40,34 @@
 		<![endif]-->
 	</head>
 	<body>
-		<h1>Dominion</h1>
-        
-        <div id="login">
-        <form>
-        <input type="text" placeholder="Username" class="textbox formcommon" />
-        <input type="password" placeholder="Password" class="textbox formcommon" />
-        <input type="submit" value="Login" class="button formcommon" />
-        </form>
-        </div>
-        
-		<canvas id="game" width="960px" height="540px">
+		<div id="title-wrapper">
+			<div id="title">
+				<h1>Dominion</h1>
+				<span>
+					Claim territory, wage war, and become powerful.<br />
+					Still extremely early in development.
+				</span>
+
+				<form id="login">
+					<input type="text" placeholder="Username" class="textbox formcommon" /><br />
+					<input type="password" placeholder="Password" class="textbox formcommon" /><br />
+
+					<input type="submit" value="Login" class="button formcommon" />
+				</form>
+
+				<span>
+					Want to contribute?<br />
+					<a href="https://github.com/codeThatThinks/Dominion/wiki">Dominion Wiki</a>&nbsp;&middot;&nbsp;<a href="https://github.com/codeThatThinks/Dominion">GitHub Repo</a>
+				</span>
+			</div>
+		</div>
+
+		<canvas id="game">
 			<br />
 			<br />
 			<b>Oh No!</b><br />
 			Your browser doesn't support<br />
 			the awesomeness of HTML5!
 		</canvas>
-		<br />
-		Claim territory, wage war, and become powerful. Still extremely early in development.<br />
-		<br />
-		<a href="https://github.com/codeThatThinks/Dominion/wiki">Dominion Wiki</a><br />
-		<a href="https://github.com/codeThatThinks/Dominion">GitHub Repo</a>		
 	</body>
 </html>

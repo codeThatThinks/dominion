@@ -14,6 +14,28 @@ $(document).ready(function()
 
 
 /**
+ * resize canvas to fullscreen
+ */
+$(document).ready(function()
+{
+	canvas.width(window.innerWidth);
+	canvas.height(window.innerHeight);
+
+	context.canvas.width = window.innerWidth;
+	context.canvas.height = window.innerHeight;
+
+	$(window).resize(function()
+	{
+		canvas.width(window.innerWidth);
+		canvas.height(window.innerHeight);
+		
+		context.canvas.width = window.innerWidth;
+		context.canvas.height = window.innerHeight;
+	});
+});
+
+
+/**
  * disable text select when double-clicking canvas
  */
 $(document).ready(function()
