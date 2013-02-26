@@ -29,6 +29,7 @@
 		<script type="text/javascript" src="scripts/ui/mouse.js"></script>
 
 		<script type="text/javascript" src="scripts/multiplayer/core.js"></script>
+        <script type="text/javascript" src="scripts/login.js"></script>
 
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=1024" />
@@ -38,6 +39,15 @@
 	</head>
 	<body>
 		<h1>Dominion</h1>
+        
+        <div id="login">
+        <form>
+        <input type="text" placeholder="Username" class="textbox formcommon" />
+        <input type="password" placeholder="Password" class="textbox formcommon" />
+        <input type="submit" value="Login" class="button formcommon" />
+        </form>
+        </div>
+        
 		<canvas id="game" width="960px" height="540px">
 			<br />
 			<br />

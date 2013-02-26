@@ -48,3 +48,23 @@ canvas#game
 	src: url('font_Cabin Medium.otf');
 	font-weight: 500;
 }
+
+#login {
+	padding: 24px;	
+}
+
+.formcommon {
+	font: 12pt 'Cabin';
+	margin: 0;	
+	border: none;
+	background: rgba(0, 0, 0, 0.8);
+	color: #FFF;
+}
+
+.button {
+	padding: 5px;
+}
+
+.textbox {
+	padding: 5px;
+}
