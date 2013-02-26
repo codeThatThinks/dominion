@@ -7,7 +7,7 @@ var countries = new Array();						// countries[0] is always player's country
 
 var addCountry = function(name, color)
 {
-	if(!getCountry(name))
+	if(!getCountry(name))							// prevent duplicate countries
 	{
 		countries.push(new Country(name, color));
 	}
@@ -16,7 +16,7 @@ var addCountry = function(name, color)
 var removeCountry = function(name)
 {
 	// remove territory
-	for(var n = 0; n < territory.length; n++)
+	for(var n = territory.length; n >= 0; n--)
 	{
 		if(territory[n].country == name)
 		{
@@ -24,7 +24,7 @@ var removeCountry = function(name)
 		}
 	}
 
-	for(var n = 0; n < countries.length; n++)
+	for(var n = territory.length; n >= 0; n--)
 	{
 		if(countries[n].name == name)
 		{
