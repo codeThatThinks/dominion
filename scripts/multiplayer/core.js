@@ -16,7 +16,10 @@ var connectToServer = function()
 {
 	try
 	{
-		multiplayerServer = io.connect('http://dominion-server.ianglen.me');
+		multiplayerServer = io.connect('http://dominion-server.ianglen.me',
+		{
+			'sync disconnect on unload': true
+		});
 
 		multiplayerServer.on('connect', function()
 		{
