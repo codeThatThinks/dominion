@@ -61,6 +61,14 @@ canvas#game
 	color: #FFF;
 }
 
+.formcommon:hover {
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.formcommon:active {
+	background: rgba(0, 0, 0, 0.4);
+}
+
 .button {
 	padding: 5px;
 }
