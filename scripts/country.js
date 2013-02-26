@@ -16,7 +16,7 @@ var addCountry = function(name, color)
 var removeCountry = function(name)
 {
 	// remove territory
-	for(var n = territory.length; n >= 0; n--)
+	for(var n = territory.length - 1; n >= 0; n--)
 	{
 		if(territory[n].country == name)
 		{
@@ -24,7 +24,7 @@ var removeCountry = function(name)
 		}
 	}
 
-	for(var n = countries.length; n >= 0; n--)
+	for(var n = 0; n < countries.length; n++)
 	{
 		if(countries[n].name == name)
 		{
