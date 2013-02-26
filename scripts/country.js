@@ -24,7 +24,7 @@ var removeCountry = function(name)
 		}
 	}
 
-	for(var n = territory.length; n >= 0; n--)
+	for(var n = countries.length; n >= 0; n--)
 	{
 		if(countries[n].name == name)
 		{
