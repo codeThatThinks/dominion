@@ -14,11 +14,14 @@ factory.src = "./assets/entities/factory.png";
 
 var farmbuilding = new Image();
 farmbuilding.src = "./assets/entities/farmbuilding.png";
+
+
 /**
- * game variables
+ * game setup
  */
 $(document).ready(function()
 {
+	/* game variables */
 	window.origin = new Point(canvas.width() / 2, canvas.height() / 2);						// pixel location of isometric point (0,0)
 	origin.movable = false;																	// add movable property to origin
 
@@ -28,12 +31,13 @@ $(document).ready(function()
 	window.currentMouseLocation = new Point;
 	window.mouseLocation = new Point;
 
+
+	/* initialize game variables */
 	// create player country (countries[0])
 	addCountry("Country #" + Math.floor(Math.random() * 100), new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50));
 
-	// ui variables
-	window.elementsArray = new Array();
 
+	/* initialize ui */
 	// ui elements
 	addElement(new Element("lblMouse", "label", "", new Point(25, 25), new Color(170,170,170), 1, true));
 	addElement(new Element("lblIsometric", "label", "", new Point(25, 45), new Color(170,170,170), 1, true));
@@ -51,8 +55,31 @@ $(document).ready(function()
 	addEntity(new Entity("factory", factory, new Point(4, 5), true));
 	addEntity(new Entity("farmbuilding", farmbuilding, new Point(8, 6), true));
 
-	// ready, connect to server
+
+	/* connect to game server */
 	connectToServer();
+
+
+	/* draw initial game */
+	// clear canvas, draw grid
+	clear();
+
+	// recalculate
+	perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
+	perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
+
+	drawGrid(new Color(54,54,54));
+	
+	// draw objects
+	drawRect(-10, -10, 10, 10, new Color(85,85,85));
+	drawTerritory();
+
+	// draw entities
+	drawEntities();
+
+
+	/* display login screen */
+	displayLogin();
 });
 
 /**
@@ -111,11 +138,3 @@ var gameLoop = function()
 
 	loop = setTimeout(gameLoop, 20);
 }
-
-/**
- * load game when page has finished loading
- */
-$(document).ready(function()
-{
-	window.gameLoop();
-});

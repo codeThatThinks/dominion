@@ -1,16 +1,55 @@
 /**********
- * Territory Functions
+ * Login Functions
  * Author: Peter Lunt
  *********/
 
-//This stuff needs to be run constantly, a kind of loop I guess...
+/* variables */
+var isLoggedIn = false;
 
+
+/**
+ * events
+ */
 $(document).ready(function()
-{	
-	if(loggedIn == true) {
-		$("#login").hide();
-	}
-	else {
-		$("#login").show();
-	}	
+{
+	// user clicks login button
+	$('#login input[type=submit]').click(function(e)
+	{
+		var username = $('#login input#username').val();
+		var password = $('#login input#password').val();
+
+		$('#status').html("<h2>Logging in...</h2>");
+
+		login();
+
+		e.preventDefault();
+		return false;
+	});
 });
+
+
+/**
+ * window.login()
+ * logs in user
+ */
+var login = function()
+{
+	$('#title-wrapper').hide();
+
+	gameLoop();
+}
+
+
+/**
+ * window.initLogin()
+ * displays login window
+ */
+var displayLogin = function()
+{
+	if(isDown)
+	{
+		$('#status').html("<h2>Server is down.</h2><span>It's probably down for maintenance or something. Please come back later.</span>");
+	}
+
+	$('#title-wrapper').show();
+}
