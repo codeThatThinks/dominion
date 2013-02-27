@@ -39,12 +39,14 @@ $(document).ready(function()
 	// create player country (countries[0])
 	addCountry("Country #" + Math.floor(Math.random() * 100), new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50));
 
+	//render trees
+	generateTrees(150, 0);
+
 	// entities
 	addEntity(new Entity("building", building, new Point(2, 1), true));
 	addEntity(new Entity("factory", factory, new Point(4, 5), true));
 	addEntity(new Entity("farmbuilding", farmbuilding, new Point(8, 6), true));
 
-	generateTrees(50, 5);
 	
 	/* connect to game server */
 	connectToServer();
