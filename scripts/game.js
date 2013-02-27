@@ -15,6 +15,9 @@ factory.src = "./assets/entities/factory.png";
 var farmbuilding = new Image();
 farmbuilding.src = "./assets/entities/farmbuilding.png";
 
+var tree = new Image();
+tree.src = "./assets/entities/farmbuilding.png";
+
 
 /**
  * game setup
@@ -41,7 +44,8 @@ $(document).ready(function()
 	addEntity(new Entity("factory", factory, new Point(4, 5), true));
 	addEntity(new Entity("farmbuilding", farmbuilding, new Point(8, 6), true));
 
-
+	generateTrees(50, 5);
+	
 	/* connect to game server */
 	connectToServer();
 
