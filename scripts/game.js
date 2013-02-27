@@ -36,20 +36,6 @@ $(document).ready(function()
 	// create player country (countries[0])
 	addCountry("Country #" + Math.floor(Math.random() * 100), new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50));
 
-
-	/* initialize ui */
-	// ui elements
-	addElement(new Element("lblMouse", "label", "", new Point(25, 25), new Color(170,170,170), 1, true));
-	addElement(new Element("lblIsometric", "label", "", new Point(25, 45), new Color(170,170,170), 1, true));
-	addElement(new Element("lblElement", "label", "", new Point(25, 65), new Color(170,170,170), 1, true));
-	addElement(new Element("lblMultiplayer", "label", "", new Point(25, 85), new Color(170,170,170), 1, false));
-	addElement(new Element("lblCountry", "label", "", new Point(25, canvas.height() - 45), countries[0].color, 1, true));
-
-	addElement(new Element("btnZoomIn", "button", "+", new Point(canvas.width() - 55, 25), new Color(0,0,0), 0.4, true, 30, 30));
-	addElement(new Element("btnZoomOut", "button", "–", new Point(canvas.width() - 55, 65), new Color(0,0,0), 0.4, true, 30, 30));
-	addElement(new Element("btnPan", "button", "Pan", new Point(canvas.width() - 146, canvas.height() - 55), new Color(136,136,136), 0.4, true));
-	addElement(new Element("btnClaim", "button", "Claim", new Point(canvas.width() - 88, canvas.height() - 55), new Color(0,0,0), 0.4, true));
-
 	// entities
 	addEntity(new Entity("building", building, new Point(2, 1), true));
 	addEntity(new Entity("factory", factory, new Point(4, 5), true));

@@ -15,6 +15,7 @@ var drawElements = function()
 {
 	for(var n = 0; n < elementsArray.length; n++)
 	{
+		elementsArray[n].drawSetup();
 		elementsArray[n].draw();
 	}
 }

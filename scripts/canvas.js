@@ -31,6 +31,9 @@ $(document).ready(function()
 		
 		context.canvas.width = window.innerWidth;
 		context.canvas.height = window.innerHeight;
+
+		context.textBaseline = 'top';
+		context.font = '13pt Cabin';
 	});
 });
 
@@ -72,5 +75,5 @@ $(document).ready(function()
 $(document).ready(function()
 {
 	context.textBaseline = 'top';										// make upper-left corner location of text
-	context.font = 'light 12pt Cabin';									// set font to 12pt Cabin Light
+	context.font = '13pt Cabin';										// set font to 13pt Cabin Light
 });
