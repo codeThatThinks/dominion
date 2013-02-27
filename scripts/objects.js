@@ -1,6 +1,7 @@
 /**********
  * Game Objects
  * Author: Ian Glen <ian@ianglen.me>
+ * 	   Brian Glen <br.glen@yahoo.com>
  *********/
 
 /**
@@ -21,6 +22,43 @@ function Point(x, y)
 	this.x = x;
 	this.y = y;
 	this.set = set;
+}
+
+
+/**
+ * generateTrees(gen, clump)
+ *  generates random clumping trees
+ *     gen - amount of clumps you want generated
+ *     clump - amount of trees in each clump
+ */
+function generateTrees(gen, clump)
+{
+	var rTreeX;
+	var rTreeY;
+	var rTreeX2;
+	var rTreeY2;
+	
+	for(i = 0;i <= gen;i ++)
+	{
+		rTreeX = Math.random() * 10;
+		rTreeY = Math.random() * 10;
+		
+		addEntity(new Entity("tree" + i, tree, new Point(rTreeX, rTreeY), true));
+		
+		for(a = 0;a <= clump;a ++)
+		{
+			rTreeX2 = 0;
+			rTreeX2 = Math.random() * 10;
+			rTreeX2 = rTreeX2 + rTreeX;
+			
+			rTreeY2 = 0;
+			rTreeY2 = Math.random() * 10;
+			rTreeY2 = rTreeY2 + rTreeY;
+			
+			addEntity(new Entity("tree" + a, tree, new Point(rTreeX2, rTreeY2), true));
+		}
+	}
+	
 }
 
 
