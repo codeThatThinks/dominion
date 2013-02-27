@@ -16,7 +16,7 @@ var farmbuilding = new Image();
 farmbuilding.src = "./assets/entities/farmbuilding.png";
 
 var tree = new Image();
-tree.src = "./assets/entities/farmbuilding.png";
+tree.src = "./assets/entities/tree.png";
 
 
 /**
