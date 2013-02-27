@@ -15,7 +15,7 @@ $(document).ready(function()
 	// user clicks login button
 	$('#login input[type=submit]').click(function(e)
 	{
-		var username = $('#login input#username').val();
+		var email = $('#login input#email').val();
 		var password = $('#login input#password').val();
 
 		$('#status').html("<h2>Logging in...</h2>");
