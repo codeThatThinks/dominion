@@ -62,5 +62,11 @@ $(document).keyup(function(e)
 	{
 		origin.set(origin.x, origin.y + 70);
 	}
+	
+	if(e.keyCode == 82)												//R Key centres the map			
+	{
+		origin.set(0 + (canvas.width() / 2), 0 + (canvas.height() / 2));
+	}
+	
 
 });
