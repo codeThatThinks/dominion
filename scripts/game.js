@@ -40,7 +40,7 @@ $(document).ready(function()
 	addCountry("Country #" + Math.floor(Math.random() * 100), new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50));
 
 	//render trees
-	generateTrees(150, 0);
+	generateTrees(100, 10);
 
 	// entities
 	addEntity(new Entity("building", building, new Point(2, 1), true));
