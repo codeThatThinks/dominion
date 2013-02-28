@@ -3,21 +3,6 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
-/**
- * entity resources
- */
-var building = new Image();
-building.src = "./assets/entities/building.png";
-
-var factory = new Image();
-factory.src = "./assets/entities/factory.png";
-
-var farmbuilding = new Image();
-farmbuilding.src = "./assets/entities/farmbuilding.png";
-
-var tree = new Image();
-tree.src = "./assets/entities/tree.png";
-
 
 /**
  * game setup

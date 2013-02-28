@@ -7,6 +7,20 @@
 var entityArray = new Array();
 
 
+/* Entity resources */
+var building = new Image();
+building.src = "./assets/entities/building.png";
+
+var factory = new Image();
+factory.src = "./assets/entities/factory.png";
+
+var farmbuilding = new Image();
+farmbuilding.src = "./assets/entities/farmbuilding.png";
+
+var tree = new Image();
+tree.src = "./assets/entities/tree.png";
+
+
 /**
  * window.drawEntities()
  * draws entities in entities array
