@@ -5,6 +5,7 @@
 
 /* UI elements array */
 var elementsArray = new Array();
+var displayUI = true;
 
 
 /**
@@ -13,10 +14,13 @@ var elementsArray = new Array();
  */
 var drawElements = function()
 {
-	for(var n = 0; n < elementsArray.length; n++)
+	if(displayUI)
 	{
-		elementsArray[n].drawSetup();
-		elementsArray[n].draw();
+		for(var n = 0; n < elementsArray.length; n++)
+		{
+			elementsArray[n].drawSetup();
+			elementsArray[n].draw();
+		}
 	}
 }
 

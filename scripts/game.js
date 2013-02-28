@@ -37,26 +37,16 @@ $(document).ready(function()
 	connectToServer();
 
 
-	/* draw initial game */
-	// clear canvas, draw grid
-	clear();
-
-	// recalculate
-	perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
-	perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
-
-	drawGrid(new Color(54,54,54));
-	
-	// draw objects
-	drawRect(-10, -10, 10, 10, new Color(85,85,85));
-	drawTerritory();
-
-	// draw entities
-	drawEntities();
-
-
 	/* display login screen */
 	displayLogin();
+
+
+	/* hide UI when login window present */
+	displayUI = false;
+
+
+	/* start game loop */
+	gameLoop();
 });
 
 /**

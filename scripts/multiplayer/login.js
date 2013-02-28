@@ -8,7 +8,22 @@ var isLoggedIn = false;
 
 
 /**
- * events
+ * window.displayLogin()
+ * displays login window
+ */
+var displayLogin = function()
+{
+	if(isDown)
+	{
+		$('#status').html("<h2>Server is down.</h2><span>It's probably down for maintenance or something. Please come back later.</span>");
+	}
+
+	$('#title-wrapper').show();
+}
+
+
+/**
+ * handle user login click
  */
 $(document).ready(function()
 {
@@ -36,20 +51,5 @@ var login = function()
 {
 	$('#title-wrapper').hide();
 
-	gameLoop();
-}
-
-
-/**
- * window.initLogin()
- * displays login window
- */
-var displayLogin = function()
-{
-	if(isDown)
-	{
-		$('#status').html("<h2>Server is down.</h2><span>It's probably down for maintenance or something. Please come back later.</span>");
-	}
-
-	$('#title-wrapper').show();
+	displayUI = true;
 }

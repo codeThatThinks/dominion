@@ -3,7 +3,9 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
-/* variables */
+/**
+ * variables
+ */
 var multiplayerServer;
 var isOnline = false;
 var isDown = false;
