@@ -38,4 +38,29 @@ $(document).keyup(function(e)
 			gridSpacing += 10;
 		}
 	}
+	
+/**
+ * Handles camera movement
+ */
+	
+	if(e.keyCode == 65 || e.keyCode == 37)							//Camera  Left W					
+	{
+		origin.set(origin.x + 70, origin.y);
+	}
+	
+	if(e.keyCode == 68 || e.keyCode == 39)							//Camera Right D						
+	{
+		origin.set(origin.x - 70, origin.y);
+	}
+	
+	if(e.keyCode == 83 || e.keyCode == 40)							//Camera Down W					
+	{
+		origin.set(origin.x, origin.y - 70);
+	}
+	
+	if(e.keyCode == 87 || e.keyCode == 38)							//Camera Up D				
+	{
+		origin.set(origin.x, origin.y + 70);
+	}
+
 });
