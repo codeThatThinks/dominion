@@ -52,11 +52,12 @@
 					Still extremely early in development.
 				</span>
 
-				<form id="login">
-					<input type="text" placeholder="Email" id="email" /><br />
-					<input type="password" placeholder="Password" id="password" /><br />
+				<iframe src="login.html" name="dummy" style="display: none"></iframe>
+				<form action="" method="post" target="dummy" id="login">
+					<input type="text" placeholder="Email" id="email" name="email" /><br />
+					<input type="password" placeholder="Password" id="password" name="password" /><br />
 					<span><small>If you don't have an account, it will be created.</small></span><br />
-					<input type="submit" value="Login / Sign Up" /><br />
+					<input type="submit" value="Login / Sign Up" />
 				</form>
 
 				<div id="status">

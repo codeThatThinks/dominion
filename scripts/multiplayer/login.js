@@ -22,12 +22,12 @@ var displayLogin = function(email, password)
 	{
 		$('#status').hide();
 		$('form#login').show();
+
+		if(email) $('#email').val(email);
+		if(password) $('#password').val(password);
 	}
 
 	$('#title-wrapper').show();
-
-	$('#email').val(email);
-	$('#password').val(password);
 }
 
 
@@ -80,7 +80,7 @@ var login = function(email, password)
  */
 $(document).ready(function()
 {
-	$('form#login input[type=submit]').click(function(e)
+	$('form#login').submit(function(e)
 	{
 		var email = $('#email').val();
 		var password = $('#password').val();
@@ -106,8 +106,5 @@ $(document).ready(function()
 				login(email, password);
 			}
 		}
-
-		e.preventDefault();
-		return false;
 	});
 });
