@@ -86,24 +86,48 @@ $(document).ready(function()
 		var password = $('#password').val();
 
 		$('form#login').hide();
-			
+		
 		$('#status').html("<h2>Logging in...</h2>");
 		$('#status').show();
 
-		if(!email || !password)
+		if(!email || password.length < 4)
 		{
 			displayLogin(email, password);
 			$('input').addClass('error');
+
+			e.preventDefault();
+			return false;
 		}
 		else
 		{
-			if(isDown)
+			var atSignCount = 0;
+
+			for(var n = 0; n < email.length; n++)
+			{
+				if(email.substr(n, 1) == "@") atSignCount++;
+			}
+
+			if(atSignCount != 1)
 			{
 				displayLogin(email, password);
+				$('input#email').addClass('error');
+
+				e.preventDefault();
+				return false;
 			}
 			else
 			{
-				login(email, password);
+				if(isDown)
+				{
+					displayLogin(email, password);
+
+					e.preventDefault();
+					return false;
+				}
+				else
+				{
+					login(email, password);
+				}
 			}
 		}
 	});
