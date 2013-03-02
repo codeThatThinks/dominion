@@ -10,6 +10,7 @@
 		<!-- external libraries -->
 		<script type="text/javascript" src="scripts/jquery.js"></script>
 		<script type="text/javascript" src="http://dominion-server.ianglen.me/socket.io/socket.io.js"></script>
+		<script type="text/javascript" src="scripts/md5.js"></script>
 
 		<!-- game javascript -->
 		<script type="text/javascript" src="scripts/canvas.js"></script>
@@ -51,13 +52,15 @@
 					Still extremely early in development.
 				</span>
 
+				<form id="login">
+					<input type="text" placeholder="Email" id="email" /><br />
+					<input type="password" placeholder="Password" id="password" /><br />
+					<span><small>If you don't have an account, it will be created.</small></span><br />
+					<input type="submit" value="Login / Sign Up" /><br />
+				</form>
+
 				<div id="status">
-					<form id="login" action="">
-						<input type="text" placeholder="Email" id="email" /><br />
-						<input type="password" placeholder="Password" id="password" /><br />
-						<span><small>If you don't have an account, it will be created.</small></span><br />
-						<input type="submit" value="Login / Sign Up" /><br />
-					</form>
+					<h2>Logging in...</h2>
 				</div>
 
 				<span>

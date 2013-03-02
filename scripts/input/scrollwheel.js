@@ -10,21 +10,24 @@ $(document).ready(function()
 {
 	canvas.bind('mousewheel', function(e)
 	{
-		if(e.originalEvent.wheelDelta / 120 > 0)																				// if mouse is scrolling up, zoom out
+		if(allowInput)
 		{
-			if((gridSpacing - 5) >= 20 && (gridSpacing - 5) <= 150)
+			if(e.originalEvent.wheelDelta / 120 > 0)																				// if mouse is scrolling up, zoom out
 			{
-				gridSpacing -= 5;
+				if((gridSpacing - 5) >= 20 && (gridSpacing - 5) <= 150)
+				{
+					gridSpacing -= 5;
+				}
 			}
-		}
-		else																													// else, zoom in
-		{
-			if((gridSpacing + 5) >= 20 && (gridSpacing + 5) <= 150)
+			else																													// else, zoom in
 			{
-				gridSpacing += 5;
+				if((gridSpacing + 5) >= 20 && (gridSpacing + 5) <= 150)
+				{
+					gridSpacing += 5;
+				}
 			}
-		}
 
-		return e.preventDefault() && false;																										// prevent entire page from scrolling
+			return e.preventDefault() && false;																						// prevent entire page from scrolling
+		}
 	});
 });

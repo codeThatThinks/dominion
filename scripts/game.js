@@ -18,6 +18,7 @@ $(document).ready(function()
 	window.isClaiming = false;
 	window.currentMouseLocation = new Point;
 	window.mouseLocation = new Point;
+	window.allowInput = true;
 
 
 	/* initialize game variables */
@@ -43,6 +44,7 @@ $(document).ready(function()
 
 	/* hide UI when login window present */
 	displayUI = false;
+	allowInput = false;
 
 
 	/* start game loop */

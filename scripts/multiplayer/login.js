@@ -11,45 +11,103 @@ var isLoggedIn = false;
  * window.displayLogin()
  * displays login window
  */
-var displayLogin = function()
+var displayLogin = function(email, password)
 {
 	if(isDown)
 	{
 		$('#status').html("<h2>Server is down.</h2><span>It's probably down for maintenance or something. Please come back later.</span>");
+		$('#status').show();
+	}
+	else
+	{
+		$('#status').hide();
+		$('form#login').show();
 	}
 
 	$('#title-wrapper').show();
+
+	$('#email').val(email);
+	$('#password').val(password);
 }
 
 
 /**
- * handle user login click
+ * window.displayLogin()
+ * displays login window
+ */
+var hideLogin = function()
+{
+	$('#title-wrapper').hide();
+}
+
+
+/**
+ * window.login()
+ * handle user login
+ */
+var login = function(email, password)
+{
+	if(!isOnline)
+	{
+		setTimeout(login, 50);
+	}
+	else
+	{
+		multiplayerServer.emit('login', email, md5(password));
+
+		multiplayerServer.on('loginEvent', function(success)
+		{
+			if(success)
+			{
+				hideLogin();
+				displayUI = true;
+				allowInput = true;
+
+				/*countries.splice(0, 0, new Country(country, new Color(color.red, color.blue, color.green)));*/
+			}
+			else
+			{
+				displayLogin(email, password);
+				$('input').addClass('error');
+			}
+		});
+	}
+}
+
+
+/**
+ * when user clicks login button
  */
 $(document).ready(function()
 {
-	// user clicks login button
-	$('#login input[type=submit]').click(function(e)
+	$('form#login input[type=submit]').click(function(e)
 	{
-		var email = $('#login input#email').val();
-		var password = $('#login input#password').val();
+		var email = $('#email').val();
+		var password = $('#password').val();
 
+		$('form#login').hide();
+			
 		$('#status').html("<h2>Logging in...</h2>");
+		$('#status').show();
 
-		login();
+		if(!email || !password)
+		{
+			displayLogin(email, password);
+			$('input').addClass('error');
+		}
+		else
+		{
+			if(isDown)
+			{
+				displayLogin(email, password);
+			}
+			else
+			{
+				login(email, password);
+			}
+		}
 
 		e.preventDefault();
 		return false;
 	});
 });
-
-
-/**
- * window.login()
- * logs in user
- */
-var login = function()
-{
-	$('#title-wrapper').hide();
-
-	displayUI = true;
-}

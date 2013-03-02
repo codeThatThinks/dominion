@@ -10,56 +10,59 @@ $(document).ready(function()
 {
 	canvas.click(function(e)
 	{
-		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
-
-		if(isElement(newMouseLocation))
+		if(allowInput)
 		{
-			switch(isElement(newMouseLocation).name)
+			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+
+			if(isElement(newMouseLocation))
 			{
-				case 'btnZoomIn':
-					if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
-					{
-						gridSpacing += 10;
-					}
+				switch(isElement(newMouseLocation).name)
+				{
+					case 'btnZoomIn':
+						if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
+						{
+							gridSpacing += 10;
+						}
 
-					break;
+						break;
 
-				case 'btnZoomOut':
-					if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
-					{
-						gridSpacing -= 10;
-					}
+					case 'btnZoomOut':
+						if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
+						{
+							gridSpacing -= 10;
+						}
 
-					break;
+						break;
 
-				case 'btnPan':
-					if(!isPanning)
-					{
-						isClaiming = false;
-						getElement('btnClaim').color = new Color(0,0,0);
+					case 'btnPan':
+						if(!isPanning)
+						{
+							isClaiming = false;
+							getElement('btnClaim').color = new Color(0,0,0);
 
-						isPanning = true;
-						getElement('btnPan').color = new Color(136,136,136);
-					}
+							isPanning = true;
+							getElement('btnPan').color = new Color(136,136,136);
+						}
 
-					break;
+						break;
 
-				case 'btnClaim':
-					if(!isClaiming)
-					{
-						isPanning = false;
-						getElement('btnPan').color = new Color(0,0,0);
+					case 'btnClaim':
+						if(!isClaiming)
+						{
+							isPanning = false;
+							getElement('btnPan').color = new Color(0,0,0);
 
-						isClaiming = true;
-						getElement('btnClaim').color = new Color(136,136,136);
-					}
+							isClaiming = true;
+							getElement('btnClaim').color = new Color(136,136,136);
+						}
 
-					break;
+						break;
+				}
 			}
-		}
-		else if(isClaiming && isOnline)
-		{
-			claim(getGridPoint(newMouseLocation.x, newMouseLocation.y), countries[0].name);
+			else if(isClaiming && isOnline)
+			{
+				claim(getGridPoint(newMouseLocation.x, newMouseLocation.y), countries[0].name);
+			}
 		}
 	});
 });
@@ -73,23 +76,29 @@ $(document).ready(function()
 {
 	canvas.mousedown(function(e)
 	{
-		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
-
-		if(isPanning && !isElement(newMouseLocation) && e.which == 1)
+		if(allowInput)
 		{
-				originMovable = true;
-				currentMouseLocation.x = newMouseLocation.x - origin.x;
-				currentMouseLocation.y = newMouseLocation.y - origin.y;
+			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+
+			if(isPanning && !isElement(newMouseLocation) && e.which == 1)
+			{
+					originMovable = true;
+					currentMouseLocation.x = newMouseLocation.x - origin.x;
+					currentMouseLocation.y = newMouseLocation.y - origin.y;
+			}
 		}
 	});
 	
 	canvas.mouseup(function(e)
 	{
-		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
-			
-		if(isPanning)
+		if(allowInput)
 		{
-			originMovable = false;
+			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+			
+			if(isPanning)
+			{
+				originMovable = false;
+			}
 		}
 	});
 });
@@ -102,14 +111,17 @@ $(document).ready(function()
 {
 	canvas.mousemove(function(e)
 	{
-		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
-
-		if(originMovable)
+		if(allowInput)
 		{
-			origin.set(newMouseLocation.x - currentMouseLocation.x, newMouseLocation.y - currentMouseLocation.y);
-		}
+			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
 
-		mouseLocation.x = newMouseLocation.x;
-		mouseLocation.y = newMouseLocation.y;
+			if(originMovable)
+			{
+				origin.set(newMouseLocation.x - currentMouseLocation.x, newMouseLocation.y - currentMouseLocation.y);
+			}
+
+			mouseLocation.x = newMouseLocation.x;
+			mouseLocation.y = newMouseLocation.y;
+		}
 	});
 });

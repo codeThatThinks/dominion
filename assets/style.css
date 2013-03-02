@@ -73,6 +73,8 @@ canvas#game
 
 	#status
 	{
+		display: none;
+
 		height: 125px;
 		margin-top: 50px;
 		margin-bottom: 75px;
@@ -80,6 +82,11 @@ canvas#game
 
 	form#login
 	{
+		display: none;
+
+		height: 125px;
+		margin-top: 50px;
+		margin-bottom: 75px;
 	}
 
 		form#login input
@@ -107,6 +114,21 @@ canvas#game
 			{
 				border-color: #CCCCCC;
 				outline: none;
+			}
+
+		form#login input.error
+		{
+			border-color: #FFAAAA;
+		}
+
+			form#login input.error:hover
+			{
+				border-color: #FF5555;
+			}
+
+			form#login input.error:focus
+			{
+				border-color: #FF5555;
 			}
 
 		form#login input[type=submit]
