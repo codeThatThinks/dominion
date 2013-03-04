@@ -76,29 +76,23 @@ $(document).ready(function()
 {
 	canvas.mousedown(function(e)
 	{
-		if(allowInput)
-		{
-			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
 
-			if(isPanning && !isElement(newMouseLocation) && e.which == 1)
-			{
-					originMovable = true;
-					currentMouseLocation.x = newMouseLocation.x - origin.x;
-					currentMouseLocation.y = newMouseLocation.y - origin.y;
-			}
+		if(isPanning && !isElement(newMouseLocation) && e.which == 1 || e.which == 3)
+		{
+				originMovable = true;
+				currentMouseLocation.x = newMouseLocation.x - origin.x;
+				currentMouseLocation.y = newMouseLocation.y - origin.y;
 		}
 	});
 	
 	canvas.mouseup(function(e)
 	{
-		if(allowInput)
-		{
-			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
 			
-			if(isPanning)
-			{
-				originMovable = false;
-			}
+		if(isPanning || e.which == 3)
+		{
+			originMovable = false;
 		}
 	});
 });
