@@ -12,7 +12,7 @@ $(document).ready(function()
 	{
 		if(allowInput)
 		{
-			if(e.originalEvent.wheelDelta / 120 > 0)																				// if mouse is scrolling up, zoom out
+			if(e.originalEvent.wheelDelta / 120 > 0)																			// if mouse is scrolling up, zoom out
 			{
 				if((gridSpacing - 5) >= 20 && (gridSpacing - 5) <= 150)
 				{
@@ -30,4 +30,31 @@ $(document).ready(function()
 			return e.preventDefault() && false;																						// prevent entire page from scrolling
 		}
 	});
-});
+	
+	/**
+	* handles firefox scroll
+	*/
+	canvas.bind('DOMMouseScroll', function(e)
+	{
+		if(allowInput)
+		{
+			if(e.originalEvent.detail > 0)																			// if mouse is scrolling up, zoom out
+			{
+				if((gridSpacing - 5) >= 20 && (gridSpacing - 5) <= 150)
+				{
+					gridSpacing -= 5;
+				}
+			}
+			else																													// else, zoom in
+			{
+				if((gridSpacing + 5) >= 20 && (gridSpacing + 5) <= 150)
+				{
+					gridSpacing += 5;
+				}
+			}
+
+			return e.preventDefault() && false;																						// prevent entire page from scrolling
+		}
+	});
+	
+}); 
