@@ -152,10 +152,7 @@ canvas#game
 			{
 				background-color: #333333;
 			}
-			
-#errorpage {
-	text-align: center;
-}
+
 
 /**
  * text
@@ -242,3 +239,7 @@ input[type=submit]
 /**
  * misc shit
  */
+			
+#errorpage {
+	text-align: center;
+}
