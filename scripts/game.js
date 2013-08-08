@@ -27,6 +27,9 @@ $(document).ready(function()
 
 	//render trees
 	generateTrees(100, 10);
+	
+	//random generating buildings
+	genBuildings(5);
 
 	// entities
 	addEntity(new Entity("building", building, new Point(2, 1), true));

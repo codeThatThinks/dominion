@@ -1,5 +1,5 @@
 /**********
- * Tree Generation Function
+ * Generation Functions
  * Author: Brian Glen <br.glen@yahoo.com>
  *********/
 
@@ -24,4 +24,18 @@ var generateTrees = function(gen, clump)
 			addEntity(new Entity("tree " + x, tree, treePoint, true));
 		}
 	}
+ }
+ 
+ /**
+ * genBuildings(num)
+ * generates random buildings
+ *     num - amount of buildings
+ */
+ var genBuildings = function(num)
+ {
+ 	for( var n = 0; n <= num; n++)
+ 	{
+ 		addEntity(new Entity("factory", factory, new Point(Math.floor(Math.random() * 11), Math.floor(Math.random() * 11)), true));
+ 	}
+ 	
  }
