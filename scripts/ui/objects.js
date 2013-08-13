@@ -13,8 +13,8 @@
  *     this.color - button color (if applicable)
  *     this.opacity - button opacity (if applicable)
  *     this.visible - is element visible on screen? (true or false)
- *     this.width - button width (if applicable)
- *     this.height - button height (if applicable)
+ *     this.width - width
+ *     this.height - height
  *     this.drawSetup - function to call before drawing object (optional)
  *
  *     this.textWidth() - returns width of text
@@ -58,14 +58,31 @@ function Element(name, type, text, point, color, opacity, visible, drawSetup, wi
 	{
 		if(!this.width)
 		{
-			var oldFont = context.font;
-			context.font =  '13pt Cabin';
+			switch(this.type)
+			{
+				case 'label':
+					var oldFont = context.font;
+					context.font =  '13pt Cabin';
 
-			var textWidth = context.measureText(this.text).width;
-			var buttonWidth = textWidth + (20);
+					var textWidth = context.measureText(this.text).width;
 
-			context.font = oldFont;
-			return buttonWidth;
+					context.font = oldFont;
+					return textWidth;
+
+					break;
+
+				case 'button':
+					var oldFont = context.font;
+					context.font =  '13pt Cabin';
+
+					var textWidth = context.measureText(this.text).width;
+					var buttonWidth = textWidth + (20);
+
+					context.font = oldFont;
+					return buttonWidth;
+
+					break;
+			}
 		}
 		else
 		{
