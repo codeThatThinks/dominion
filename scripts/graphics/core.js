@@ -4,101 +4,126 @@
  *********/
 
 /**
- * graphics variables
+ * OrthographicPoint class
  */
-var perspectiveAngle = 30;																	// angle in degrees of isometric grid
-var gridSpacing = 70;																		// side length in pixels of isometric grid square
-var perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;	// vertical width of isometric square
-var perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;	// horizontal width of isometric square
-
-
-/**
- * window.clear()
- * clears canvas
- */
-var clear = function()
+function OrthographicPoint(x, y)
 {
-	context.clearRect(0, 0, canvas.width(), canvas.height());
+	this.toIsometricPoint = function(grid)
+	{
+		orthographicX -= grid.origin.x;
+		orthographicY -= grid.origin.y;
+
+		var isometricX = (orthographicY / grid.getTileHeight()) + (orthographicX / grid.getTileWidth());
+		var isometricY = (orthographicY / grid.getTileHeight()) - (orthographicX / grid.getTileWidth());
+
+		return new IsometricPoint(isometricX, isometricY);
+	}
+
+	this.toIsometricPointAsInteger = function(grid)
+	{
+		orthographicX -= grid.origin.x;
+		orthographicY -= grid.origin.y;
+
+		var isometricX = Math.floor((orthographicY / grid.getTileHeight()) + (orthographicX / grid.getTileWidth()));
+		var isometricY = Math.floor((orthographicY / grid.getTileHeight()) - (orthographicX / grid.getTileWidth()));
+
+		return new IsometricPoint(isometricX, isometricY);
+	}
+
+	this.x = x;
+	this.y = y;
 }
 
 
 /**
- * window.drawGrid(Color color, int lineWeight)
- * draws isometric grid
- *     color - (optional) color of grid; defaults to rgb(170,170,170)
- *     lineWeight - (optional) weight of grid lines in pixels; defaults to 3
+ * IsometricPoint class
  */
-var drawGrid = function(color, lineWidth)
+function IsometricPoint(x, y)
 {
-	context.beginPath();
-
-	// left top-bottom
-	for(var n = 0; (origin.y + getIsometricY(origin.x) + (n * perspectiveHeight)) < 960; n++)
+	this.toOrthographicPoint = function(grid)
 	{
-		context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
-		context.lineTo(0, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight));
+		var orthographicX = (this.x - this.y) * (grid.getTileWidth() / 2);
+		var orthographicY = (this.x + this.y) * (grid.getTileHeight() / 2);
+
+		return new OrthographicPoint(orthographicX, orthographicY);
 	}
 
-	for(var n = 0; (origin.y + getIsometricY(origin.x) + (n * perspectiveHeight)) > 0; n--)
-	{
-		context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
-		context.lineTo(0, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight));
-	}
-
-	// left bottom-top
-	for(var n = 0; (origin.y - getIsometricY(origin.x) + (n * perspectiveHeight)) < 960; n++)
-	{
-		context.moveTo(0, origin.y + (n * perspectiveHeight) - getIsometricY(origin.x));
-		context.lineTo(origin.x, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight) - getIsometricY(origin.x));
-	}
-
-	for(var n = 0; (origin.y + (n * perspectiveHeight)) > 0; n--)
-	{
-		context.moveTo(0, origin.y + (n * perspectiveHeight) - getIsometricY(origin.x));
-		context.lineTo(origin.x, origin.y + getIsometricY(origin.x) + (n * perspectiveHeight) - getIsometricY(origin.x));
-	}
-
-	// right top-bottom
-	for(var n = 0; (origin.y + getIsometricY(origin.x) + (n * perspectiveHeight)) < 960; n++)
-	{
-		context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
-		context.lineTo(canvas.width(), origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight));
-	}
-
-	for(var n = 0; (origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight)) > 0; n--)
-	{
-		context.moveTo(origin.x, origin.y + (n * perspectiveHeight));
-		context.lineTo(canvas.width(), origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight));
-	}
-
-	// right bottom-top
-	for(var n = 0; (origin.y - getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight)) < 960; n++)
-	{
-		context.moveTo(canvas.width(), origin.y + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
-		context.lineTo(origin.x, origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
-	}
-
-	for(var n = 0; (origin.y + (n * perspectiveHeight)) > 0; n--)
-	{
-		context.moveTo(canvas.width(), origin.y + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
-		context.lineTo(origin.x, origin.y + getIsometricY(canvas.width() - origin.x) + (n * perspectiveHeight) - getIsometricY(canvas.width() - origin.x));
-	}
-
-	context.closePath();
-	color = color || new Color(170,170,170);
-	context.strokeStyle = color.formatRGB();
-	lineWidth = lineWidth || 3;
-	context.lineWidth = lineWidth;
-	context.stroke();
+	this.x = x;
+	this.y = y;
 }
 
+
 /**
- * window.centerGrid(Point point)
- * centers grid point on screen
- *     point - real-world screen point to be centered
+ * Canvas class
  */
-var centerGrid = function(point)
+function Canvas(element, context)
 {
-	origin.x += (canvas.width() / 2) - (getIsometricPoint(point.x, point.y)[0] + origin.x);
-	origin.y += (canvas.height() / 2) - (getIsometricPoint(point.x, point.y)[1] + origin.y);
+	this.clear = function()
+	{
+		this.context.clearRect(0, 0, this.element.width(), this.element.height());
+	}
+
+	this.element = element;
+	this.context = context;
+}
+
+
+/**
+ * Grid class
+ */
+function Grid(canvas, origin, tileSize, color, strokeThickness)
+{
+	this.center = function()
+	{
+		this.origin.x = this.canvas.element.width() / 2;
+		this.origin.y = this.canvas.element.height() / 2;
+	}
+
+	this.centerOnPoint = function(point)
+	{
+		this.origin.x += (this.canvas.element.width() / 2) - (point.toOrthographicPoint(this).x + this.origin.x);
+		this.origin.y += (this.canvas.element.height() / 2) - (point.toOrthographicPoint(this) + this.origin.y);
+	}
+
+	this.draw = function(topPoint, bottomPoint)
+	{
+		var drawWidth = bottomPoint.x - topPoint.x;
+		var drawHeight = bottomPoint.y - topPoint.y;
+		var x;
+
+		this.canvas.context.beginPath();
+
+		for(x = topPoint.toIsometricPointAsInteger().toOrthographicPoint().x; x - (drawHeight / Math.tan(Math.PI / 6)) < bottomPoint.x; x + this.getTileWidth())
+		{
+			this.canvas.context.moveTo(x, bottomPoint.y);
+			this.canvas.context.lineTo(x - (drawHeight / Math.tan(Math.PI / 6)), topPoint.y);
+		}
+
+		for(x = bottomPoint.toIsometricPointAsInteger().toOrthographicPoint().x; x + (drawHeight / Math.tan(Math.PI / 6)) < topPoint.x; x + this.getTileWidth())
+		{
+			this.canvas.context.moveTo(x, topPoint.y);
+			this.canvas.context.lineTo(x + (drawHeight / Math.tan(Math.PI / 6)), bottomPoint.y);
+		}
+
+		this.canvas.context.closePath();
+		this.canvas.context.strokeStyle = this.color.formatRGB();
+		this.canvas.context.lineWidth = this.strokeThickness;
+		this.canvas.context.stroke();
+	}
+
+	this.getTileWidth = function()
+	{
+		return Math.cos(Math.PI / 6) * this.tileSize * 2;
+	}
+
+	this.getTileHeight = function()
+	{
+		return Math.sin(Math.PI / 6) * this.tileSize * 2;
+	}
+
+	this.canvas = canvas;
+	this.origin = origin;
+	this.tileSize = tileSize || 70;
+	this.color = color || new Color(170, 170, 170);
+	this.strokeThickness = strokeThickness || 3;
 }
