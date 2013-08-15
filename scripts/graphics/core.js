@@ -4,6 +4,39 @@
  *********/
 
 /**
+ * Color class
+ */
+function Color(red, green, blue)
+{
+	this.formatRGB = function()
+	{
+		return "rgb(" + this.red + "," + this.green + "," + this.blue + ")";
+	}
+
+	this.formatRGBA = function(opacity)
+	{
+		return "rgba(" + this.red + "," + this.green + "," + this.blue + "," + opacity + ")";
+	}
+
+	this.fromRGB = function(string)
+	{
+		var regexp = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
+
+		string = string.replace(/ /g,'');
+    	string = string.toLowerCase();
+
+		this.red = string.match(regexp)[1];
+		this.green = string.match(regexp)[2];
+		this.blue = string.match(regexp)[3];
+	}
+
+	this.red = red;
+	this.green = green;
+	this.blue = blue;
+}
+
+
+/**
  * OrthographicPoint class
  */
 function OrthographicPoint(x, y)
@@ -89,7 +122,7 @@ function Grid(canvas, origin, movable, tileSize, color, strokeThickness)
 	{
 		topPoint = topPoint || new OrthographicPoint(0, 0);
 		bottomPoint = bottomPoint || new OrthographicPoint(this.canvas.element.width(), this.canvas.element.height());
-		
+
 		this.canvas.context.beginPath();
 
 		//**** draw \ lines ****
