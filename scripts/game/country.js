@@ -3,6 +3,16 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
+/**
+ * Country class
+ */
+function Country(name, color)
+{
+	this.name = name;
+	this.color = color;
+}
+
+
 var countries = new Array();						// countries[0] is always player's country
 
 var addCountry = function(name, color)

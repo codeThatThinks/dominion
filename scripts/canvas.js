@@ -8,8 +8,7 @@
  */
 $(document).ready(function()
 {
-	window.canvas = $('canvas#game');									// canvas DOM object
-	window.context = canvas.get(0).getContext('2d');					// canvas 2d context object
+	canvas = new Canvas($('canvas#game'), $('canvas#game').get(0).getContext('2d'));
 });
 
 
@@ -18,22 +17,22 @@ $(document).ready(function()
  */
 $(document).ready(function()
 {
-	canvas.width(window.innerWidth);
-	canvas.height(window.innerHeight);
+	canvas.element.width(window.innerWidth);
+	canvas.element.height(window.innerHeight);
 
-	context.canvas.width = window.innerWidth;
-	context.canvas.height = window.innerHeight;
+	canvas.context.canvas.width = window.innerWidth;
+	canvas.context.canvas.height = window.innerHeight;
 
 	$(window).resize(function()
 	{
-		canvas.width(window.innerWidth);
-		canvas.height(window.innerHeight);
+		canvas.element.width(window.innerWidth);
+		canvas.element.height(window.innerHeight);
 		
-		context.canvas.width = window.innerWidth;
-		context.canvas.height = window.innerHeight;
+		canvas.context.canvas.width = window.innerWidth;
+		canvas.context.canvas.height = window.innerHeight;
 
-		context.textBaseline = 'top';
-		context.font = '13pt Cabin';
+		canvas.context.textBaseline = 'top';
+		canvas.context.font = '13pt Cabin';
 	});
 });
 
@@ -65,7 +64,7 @@ $(document).ready(function()
 	    });
 	});
 
-	canvas.disableTextSelect();											// call the function of the canvas object
+	canvas.element.disableTextSelect();											// call the function of the canvas object
 });
 
 
@@ -74,6 +73,6 @@ $(document).ready(function()
  */
 $(document).ready(function()
 {
-	context.textBaseline = 'top';										// make upper-left corner location of text
-	context.font = '13pt Cabin';										// set font to 13pt Cabin Light
+	canvas.context.textBaseline = 'top';										// make upper-left corner location of text
+	canvas.context.font = '13pt Cabin';										// set font to 13pt Cabin Light
 });

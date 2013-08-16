@@ -3,6 +3,7 @@
  * Author: Brian Glen <br.glen@yahoo.com>
  *********/
 
+/**** TODO: refactor ****/
 
 /**
  * generateTrees(gen clump)
@@ -14,12 +15,12 @@ var generateTrees = function(gen, clump)
 {
 	for(var n = 0; n <= gen; n++)
 	{
-		var clumpPoint = new Point(Math.random() * 31 - 15, Math.random() * 31 - 15);
+		var clumpPoint = new IsometricPoint(Math.random() * 31 - 15, Math.random() * 31 - 15);
 		var maxTrees = Math.floor(Math.random() * clump);
 		
 		for(var x = 0; x <= maxTrees; x++)
 		{
-			var treePoint = new Point(clumpPoint.x + (Math.random() * 3 - 1), clumpPoint.y + (Math.random() * 3 - 1));
+			var treePoint = new IsometricPoint(clumpPoint.x + (Math.random() * 3 - 1), clumpPoint.y + (Math.random() * 3 - 1));
 
 			addEntity(new Entity("tree " + x, tree, treePoint, true));
 		}
@@ -35,7 +36,7 @@ var generateTrees = function(gen, clump)
  {
  	for( var n = 0; n <= num; n++)
  	{
- 		addEntity(new Entity("factory", factory, new Point(Math.floor(Math.random() * 11), Math.floor(Math.random() * 11)), true));
+ 		addEntity(new Entity("factory", factory, new IsometricPoint(Math.floor(Math.random() * 11), Math.floor(Math.random() * 11)), true));
  	}
  	
  }

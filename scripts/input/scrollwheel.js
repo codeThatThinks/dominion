@@ -8,22 +8,22 @@
 */
 $(document).ready(function()
 {
-	canvas.bind('mousewheel', function(e)
+	canvas.element.bind('mousewheel', function(e)
 	{
 		if(allowInput)
 		{
 			if(e.originalEvent.wheelDelta / 120 > 0)																			// if mouse is scrolling up, zoom out
 			{
-				if((gridSpacing - 5) >= 20 && (gridSpacing - 5) <= 150)
+				if((grid.tileSize - 5) >= 20 && (grid.tileSize - 5) <= 150)
 				{
-					gridSpacing -= 5;
+					grid.tileSize -= 5;
 				}
 			}
 			else																													// else, zoom in
 			{
-				if((gridSpacing + 5) >= 20 && (gridSpacing + 5) <= 150)
+				if((grid.tileSize + 5) >= 20 && (grid.tileSize + 5) <= 150)
 				{
-					gridSpacing += 5;
+					grid.tileSize += 5;
 				}
 			}
 
@@ -34,22 +34,22 @@ $(document).ready(function()
 	/**
 	* handles firefox scroll
 	*/
-	canvas.bind('DOMMouseScroll', function(e)
+	canvas.element.bind('DOMMouseScroll', function(e)
 	{
 		if(allowInput)
 		{
 			if(e.originalEvent.detail > 0)																			// if mouse is scrolling up, zoom out
 			{
-				if((gridSpacing - 5) >= 20 && (gridSpacing - 5) <= 150)
+				if((grid.tileSize - 5) >= 20 && (grid.tileSize - 5) <= 150)
 				{
-					gridSpacing -= 5;
+					grid.tileSize -= 5;
 				}
 			}
 			else																													// else, zoom in
 			{
-				if((gridSpacing + 5) >= 20 && (gridSpacing + 5) <= 150)
+				if((grid.tileSize + 5) >= 20 && (grid.tileSize + 5) <= 150)
 				{
-					gridSpacing += 5;
+					grid.tileSize += 5;
 				}
 			}
 

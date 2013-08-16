@@ -8,28 +8,28 @@
  */
 $(document).ready(function()
 {
-	canvas.click(function(e)
+	canvas.element.click(function(e)
 	{
 		if(allowInput)
 		{
-			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+			var newMouseLocation = new OrthographicPoint(e.pageX - canvas.element.offset().left, e.pageY - canvas.element.offset().top);
 
 			if(isElement(newMouseLocation))
 			{
 				switch(isElement(newMouseLocation).name)
 				{
 					case 'btnZoomIn':
-						if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
+						if((grid.tileSize + 10) >= 20 && (grid.tileSize + 10) <= 150)
 						{
-							gridSpacing += 10;
+							grid.tileSize += 10;
 						}
 
 						break;
 
 					case 'btnZoomOut':
-						if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
+						if((grid.tileSize - 10) >= 20 && (grid.tileSize - 10) <= 150)
 						{
-							gridSpacing -= 10;
+							grid.tileSize -= 10;
 						}
 
 						break;
@@ -61,7 +61,7 @@ $(document).ready(function()
 			}
 			else if(isClaiming && isOnline)
 			{
-				claim(getGridPoint(newMouseLocation.x, newMouseLocation.y), countries[0].name);
+				claim(newMouseLocation.toIsometricPoint(grid), countries[0].name);
 			}
 		}
 	});
@@ -74,25 +74,25 @@ $(document).ready(function()
  */
 $(document).ready(function()
 {
-	canvas.mousedown(function(e)
+	canvas.element.mousedown(function(e)
 	{
-		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+		var newMouseLocation = new OrthographicPoint(e.pageX - canvas.element.offset().left, e.pageY - canvas.element.offset().top);
 
 		if(isPanning && !isElement(newMouseLocation) && e.which == 1 || e.which == 3)
 		{
-				originMovable = true;
-				currentMouseLocation.x = newMouseLocation.x - origin.x;
-				currentMouseLocation.y = newMouseLocation.y - origin.y;
+				grid.movable = true;
+				currentMouseLocation.x = newMouseLocation.x - grid.origin.x;
+				currentMouseLocation.y = newMouseLocation.y - grid.origin.y;
 		}
 	});
 	
-	canvas.mouseup(function(e)
+	canvas.element.mouseup(function(e)
 	{
-		var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+		var newMouseLocation = new OrthographicPoint(e.pageX - canvas.element.offset().left, e.pageY - canvas.element.offset().top);
 			
 		if(isPanning || e.which == 3)
 		{
-			originMovable = false;
+			grid.movable = false;
 		}
 	});
 });
@@ -103,15 +103,15 @@ $(document).ready(function()
  */
 $(document).ready(function()
 {
-	canvas.mousemove(function(e)
+	canvas.element.mousemove(function(e)
 	{
 		if(allowInput)
 		{
-			var newMouseLocation = new Point(e.pageX - canvas.offset().left, e.pageY - canvas.offset().top);
+			var newMouseLocation = new OrthographicPoint(e.pageX - canvas.element.offset().left, e.pageY - canvas.element.offset().top);
 
-			if(originMovable)
+			if(grid.movable)
 			{
-				origin.set(newMouseLocation.x - currentMouseLocation.x, newMouseLocation.y - currentMouseLocation.y);
+				grid.origin = new OrthographicPoint(newMouseLocation.x - currentMouseLocation.x, newMouseLocation.y - currentMouseLocation.y);
 			}
 
 			mouseLocation.x = newMouseLocation.x;

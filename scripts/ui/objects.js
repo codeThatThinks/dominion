@@ -31,23 +31,23 @@ function Element(name, type, text, point, color, opacity, visible, drawSetup, wi
 			switch(this.type)
 			{
 				case 'label':
-					context.fillStyle = this.color.formatRGBA(this.opacity);
-					context.fillText(this.text, this.point.x, this.point.y);
+					canvas.context.fillStyle = this.color.formatRGBA(this.opacity);
+					canvas.context.fillText(this.text, this.point.x, this.point.y);
 
 					break;
 
 				case 'button':
 					// draw button
-					context.beginPath();
-					context.rect(this.point.x, this.point.y, this.getWidth(), this.getHeight());
-					context.closePath();
-					context.fillStyle = this.color.formatRGBA(this.opacity);
-					context.fill();
+					canvas.context.beginPath();
+					canvas.context.rect(this.point.x, this.point.y, this.getWidth(), this.getHeight());
+					canvas.context.closePath();
+					canvas.context.fillStyle = this.color.formatRGBA(this.opacity);
+					canvas.context.fill();
 
 					// draw text
-					context.font =  '13pt Cabin';
-					context.fillStyle = new Color(170,170,170).formatRGB();
-					context.fillText(this.text, this.point.x + (this.getWidth() / 2) - (this.textWidth() / 2), this.point.y + (this.getHeight() / 2) - (this.textHeight() / 2));
+					canvas.context.font =  '13pt Cabin';
+					canvas.context.fillStyle = new Color(170,170,170).formatRGB();
+					canvas.context.fillText(this.text, this.point.x + (this.getWidth() / 2) - (this.textWidth() / 2), this.point.y + (this.getHeight() / 2) - (this.textHeight() / 2));
 
 					break;
 			}
@@ -61,24 +61,24 @@ function Element(name, type, text, point, color, opacity, visible, drawSetup, wi
 			switch(this.type)
 			{
 				case 'label':
-					var oldFont = context.font;
-					context.font =  '13pt Cabin';
+					var oldFont = canvas.context.font;
+					canvas.context.font =  '13pt Cabin';
 
-					var textWidth = context.measureText(this.text).width;
+					var textWidth = canvas.context.measureText(this.text).width;
 
-					context.font = oldFont;
+					canvas.context.font = oldFont;
 					return textWidth;
 
 					break;
 
 				case 'button':
-					var oldFont = context.font;
-					context.font =  '13pt Cabin';
+					var oldFont = canvas.context.font;
+					canvas.context.font =  '13pt Cabin';
 
-					var textWidth = context.measureText(this.text).width;
+					var textWidth = canvas.context.measureText(this.text).width;
 					var buttonWidth = textWidth + (20);
 
-					context.font = oldFont;
+					canvas.context.font = oldFont;
 					return buttonWidth;
 
 					break;
@@ -110,12 +110,12 @@ function Element(name, type, text, point, color, opacity, visible, drawSetup, wi
 
 	function textWidth()				// calculate width of text in element
 	{
-		var oldFont = context.font;
-		context.font =  '13pt Cabin';
+		var oldFont = canvas.context.font;
+		canvas.context.font =  '13pt Cabin';
 
-		var textWidth = context.measureText(this.text).width;
+		var textWidth = canvas.context.measureText(this.text).width;
 
-		context.font = oldFont;
+		canvas.context.font = oldFont;
 		return textWidth;
 	}
 

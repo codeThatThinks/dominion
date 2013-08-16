@@ -3,21 +3,40 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
+/**
+ * globals
+ */
+
+/**
+ * game statuses
+ */
+var GAMESTATUS_LOADING = 0;
+var GAMESTATUS_LOADED = 1;
+var GAMESTATUS_AUTHING = 2;
+var GAMESTATUS_AUTHED = 3;
+
+var currentGameStatus;
+
 
 /**
  * game setup
  */
 $(document).ready(function()
 {
-	/* game variables */
-	window.origin = new Point(canvas.width() / 2, canvas.height() / 2);						// pixel location of isometric point (0,0)
-	origin.movable = false;																	// add movable property to origin
+	// load game resources
+	currentGameStatus = GAMESTATUS_LOADING;
+	loadResources();
 
-	window.originMovable = false;
+	// finished loading, display title dialog
+	currentGameStatus = GAMESTATUS_LOADED;
+
+	/* game variables */
+	grid = new Grid(canvas, new OrthographicPoint(canvas.element.width() / 2, canvas.element.height() / 2));
+
 	window.isPanning = true;
 	window.isClaiming = false;
-	window.currentMouseLocation = new Point;
-	window.mouseLocation = new Point;
+	window.currentMouseLocation = new OrthographicPoint;
+	window.mouseLocation = new OrthographicPoint;
 	window.allowInput = true;
 
 
@@ -32,9 +51,9 @@ $(document).ready(function()
 	genBuildings(5);
 
 	// entities
-	addEntity(new Entity("building", building, new Point(2, 1), true));
-	addEntity(new Entity("factory", factory, new Point(4, 5), true));
-	addEntity(new Entity("farmbuilding", farmbuilding, new Point(8, 6), true));
+	addEntity(new Entity("building", building, new IsometricPoint(2, 1), true));
+	addEntity(new Entity("factory", factory, new IsometricPoint(4, 5), true));
+	addEntity(new Entity("farmbuilding", farmbuilding, new IsometricPoint(8, 6), true));
 
 	
 	/* connect to game server */
@@ -61,24 +80,21 @@ $(document).ready(function()
 var gameLoop = function()
 {
 	// clear canvas, draw grid
-	clear();
+	canvas.clear();
 
-	// recalculate
-	perspectiveHeight = (Math.sin(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
-	perspectiveWidth = (Math.cos(perspectiveAngle * (Math.PI / 180)) * gridSpacing) * 2;
-
-	drawGrid(new Color(54,54,54));
+	grid.draw();
 
 	// draw grid cursor
 	if(mouseLocation.x && mouseLocation.y && isElement(mouseLocation).type != 'button')
 	{
-		var gridPoint = getGridPoint(mouseLocation.x, mouseLocation.y);
-		drawRect(gridPoint.x, gridPoint.y, gridPoint.x + 1, gridPoint.y + 1, new Color(68,68,68));
+		var cursorPoint = new OrthographicPoint(mouseLocation.x, mouseLocation.y).toIsometricPointAsInteger(grid);
+		grid.drawRect(cursorPoint, new IsometricPoint(cursorPoint.x + 1, cursorPoint.y + 1), new Color(68,68,68));
 	}
-	
+
+
 	// draw objects
-	drawRect(-10, -10, 10, 10, new Color(85,85,85));
-	drawTerritory();
+	grid.drawRect(new IsometricPoint(-10, -10), new IsometricPoint(10, 10), new Color(85,85,85));
+	//drawTerritory();
 
 	// draw entities
 	drawEntities();
@@ -86,7 +102,7 @@ var gameLoop = function()
 
 	// draw UI
 	getElement("lblMouse").text = "mouse (" + mouseLocation.x + "," + mouseLocation.y + ")";
-	getElement("lblIsometric").text = "isometric (" + getGridPoint(mouseLocation.x, mouseLocation.y).x + "," + getGridPoint(mouseLocation.x, mouseLocation.y).y + ")";
+	getElement("lblIsometric").text = "isometric (" + mouseLocation.toIsometricPointAsInteger(grid).x + "," + mouseLocation.toIsometricPointAsInteger(grid).y + ")";
 	getElement("lblElement").text = "on element: " + isElement(mouseLocation).name;
 	getElement("lblCountry").text = countries[0].name + " - Territory: " + numTerritory(countries[0].name);
 

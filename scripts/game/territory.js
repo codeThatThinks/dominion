@@ -15,7 +15,7 @@ var drawTerritory = function()
 	{
 		if(getCountry(territory[n].country))
 		{
-			drawRect(territory[n].point.x, territory[n].point.y, territory[n].point.x + 1, territory[n].point.y + 1, getCountry(territory[n].country).color, true);
+			grid.drawRect(territory[n].point, new IsometricPoint(territory[n].point.x + 1, territory[n].point.y + 1), getCountry(territory[n].country).color, true);
 		}
 	}
 }
