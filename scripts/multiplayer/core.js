@@ -120,12 +120,12 @@ $(document).ready(function()
 
 		multiplayerServer.on('claim', function(x, y, country)
 		{
-			claim(new OrthographicPoint(x,y), country);
+			claim(new IsometricPoint(x,y), country);
 		});
 
 		multiplayerServer.on('unclaim', function(x, y, country)
 		{
-			unclaim(new OrthographicPoint(x,y), country);
+			unclaim(new IsometricPoint(x,y), country);
 		});
 
 		multiplayerServer.on('disconnect', function()
