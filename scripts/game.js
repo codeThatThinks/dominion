@@ -94,7 +94,7 @@ var gameLoop = function()
 
 	// draw objects
 	grid.drawRect(new IsometricPoint(-10, -10), new IsometricPoint(10, 10), new Color(85,85,85));
-	//drawTerritory();
+	drawTerritory();
 
 	// draw entities
 	drawEntities();

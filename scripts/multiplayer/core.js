@@ -46,7 +46,7 @@ var connectToServer = function()
 
 			for(var n = 0; n < territoryArrayParse.length; n++)
 			{
-				claim(territoryArrayParse[n].point, territoryArrayParse[n].country);
+				claim(new IsometricPoint(territoryArrayParse[n].point.x, territoryArrayParse[n].point.y), territoryArrayParse[n].country);
 			}
 
 			isOnline = true;
@@ -120,12 +120,12 @@ $(document).ready(function()
 
 		multiplayerServer.on('claim', function(x, y, country)
 		{
-			claim(new Point(x,y), country);
+			claim(new OrthographicPoint(x,y), country);
 		});
 
 		multiplayerServer.on('unclaim', function(x, y, country)
 		{
-			unclaim(new Point(x,y), country);
+			unclaim(new OrthographicPoint(x,y), country);
 		});
 
 		multiplayerServer.on('disconnect', function()
