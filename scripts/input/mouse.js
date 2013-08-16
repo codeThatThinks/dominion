@@ -61,7 +61,7 @@ $(document).ready(function()
 			}
 			else if(isClaiming && isOnline)
 			{
-				claim(newMouseLocation.toIsometricPoint(grid), countries[0].name);
+				claim(newMouseLocation.toIsometricPointAsInteger(grid), countries[0].name);
 			}
 		}
 	});
