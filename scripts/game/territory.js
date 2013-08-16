@@ -5,6 +5,12 @@
 
 var territory = new Array();
 
+function territoryUnit(point, country)
+{
+	this.point = point;
+	this.country = country;
+}
+
 /**
  * window.drawTerritory()
  * draws claimed territory in territory array

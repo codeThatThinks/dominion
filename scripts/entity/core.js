@@ -1,19 +1,10 @@
 /**********
- * Game Objects
+ * Core Entity Functions
  * Author: Ian Glen <ian@ianglen.me>
- * 
  *********/
 
-/**** Game objects ****/
+/**** TODO: refactor ****/
 
-/**
- * new Entity(str name, Point point, bool visible)
- * creates entity and adds it to entity array
- *     this.name - name of element
- *     this.image - entity image
- *     this.point - entity location
- *     this.visible - is entity visible on screen? (true or false)
- */
 function Entity(name, image, point, visible)
 {
 	function draw()					// draw entity if visible = true
@@ -43,10 +34,4 @@ function Entity(name, image, point, visible)
 	this.draw = draw;
 	this.getWidth = getWidth;
 	this.getHeight = getHeight;
-}
-
-function territoryUnit(point, country)
-{
-	this.point = point;
-	this.country = country;
 }
