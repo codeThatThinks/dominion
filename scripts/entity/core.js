@@ -3,13 +3,58 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
-/**** TODO: refactor ****/
-
 /**
  * Entity class
  */
 function Entity(name, image, point, grid, visible)
 {
+	this.constructor.drawEntities = function()
+	{
+		for(var n = 0; n < this.constructor.entities.length; n++)
+		{
+			this.constructor.entities[n].draw();
+		}
+	}
+
+	this.constructor.removeEntity = function(name)
+	{
+		for(var n = 0; n < this.constructor.entities.length; n++)
+		{
+			if(this.constructor.entities[n].name = name)
+			{
+				entityArray.splice(n, 1);
+				break;
+			}
+		}
+	}
+
+	this.constructor.getEntity = function(name)
+	{
+		for(var n = 0; n < this.constructor.entities.length; n++)
+		{
+			if(this.constructor.entities[n].name == name)
+			{
+				return this.constructor.entities[n];
+			}
+		}
+
+		return false;
+	}
+
+	this.constructor.getEntityAtPoint = function(point)
+	{
+		for(var n = 0; n < this.constructor.entities.length; n++)
+		{
+			if(Math.floor(this.constructor.entities[n].point.x) == point.x && Math.floor(this.constructor.entities[n].point.y) == point.y)
+			{
+				return this.constructor.entities[n];
+			}
+		}
+
+		return false;
+	}
+
+
 	this.draw = function()
 	{
 		if(this.visible)
@@ -35,10 +80,10 @@ function Entity(name, image, point, grid, visible)
 	this.grid = grid;
 	this.visible = visible;
 
-	this.entities.push(this); // add new entity to entities array
+	this.constructor.entities.push(this); // add new entity to entities array
 }
 
 /**
  * Entities array
  */
-Entity.prototype.entities = new Array();
+Entity.entities = new Array();
