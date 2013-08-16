@@ -48,7 +48,7 @@ Grid.prototype.drawRect = function(startingPoint, endingPoint, color, fill, stro
 	if(fill)
 	{
 		this.canvas.context.fillStyle = color.formatRGBA(0.4);
-		thiscanvas.context.fill();
+		this.canvas.context.fill();
 	}
 
 	this.canvas.context.stroke();
