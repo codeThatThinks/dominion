@@ -5,33 +5,40 @@
 
 /**** TODO: refactor ****/
 
-function Entity(name, image, point, visible)
+/**
+ * Entity class
+ */
+function Entity(name, image, point, grid, visible)
 {
-	function draw()					// draw entity if visible = true
+	this.draw = function()
 	{
 		if(this.visible)
 		{
-			grid.canvas.context.drawImage(this.image, this.point.toOrthographicPoint(grid).x - ((this.image.width * grid.tileSize / 150) / 2), this.point.toOrthographicPoint(grid).y - ((this.image.height * grid.tileSize / 150) - grid.getTileHeight()), (this.image.width * grid.tileSize / 150), (this.image.height * grid.tileSize / 150));
+			this.grid.canvas.context.drawImage(this.image, this.point.toOrthographicPoint(this.grid).x - ((this.image.width * this.grid.tileSize / 150) / 2), this.point.toOrthographicPoint(grid).y - ((this.image.height * this.grid.tileSize / 150) - this.grid.getTileHeight()), (this.image.width * this.grid.tileSize / 150), (this.image.height * this.grid.tileSize / 150));
 		}
 	}
 
-	function getWidth()				// calculate width of entity
+	this.getWidth = function()
 	{
 		return this.image.width;
 		
 	}
 
-	function getHeight()			// calculate height of entity
+	this.getHeight = function()
 	{
 		return this.image.height;
 	}
 
-	this.name = name;				// name of element
-	this.image = image;				// entity image
-	this.point = point;				// location of entity as Point()
-	this.visible = visible;			// boolean - is object on screen?
+	this.name = name;
+	this.image = image;
+	this.point = point;
+	this.grid = grid;
+	this.visible = visible;
 
-	this.draw = draw;
-	this.getWidth = getWidth;
-	this.getHeight = getHeight;
+	this.entities.push(this); // add new entity to entities array
 }
+
+/**
+ * Entities array
+ */
+Entity.prototype.entities = new Array();
