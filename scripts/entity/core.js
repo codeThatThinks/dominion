@@ -6,13 +6,13 @@
 /**
  * Entity class
  */
-function Entity(name, image, point, grid, visible)
+function Entity(name, image, point, grid, topographic, visible)
 {
 	this.constructor.drawEntities = function()
 	{
-		for(var n = 0; n < this.constructor.entities.length; n++)
+		for(var n = 0; n < this.entities.length; n++)
 		{
-			this.constructor.entities[n].draw();
+			this.entities[n].draw();
 		}
 	}
 
@@ -78,12 +78,9 @@ function Entity(name, image, point, grid, visible)
 	this.image = image;
 	this.point = point;
 	this.grid = grid;
+	this.topographic = topographic;
 	this.visible = visible;
 
+	if(!this.constructor.entities) this.constructor.entities = new Array();
 	this.constructor.entities.push(this); // add new entity to entities array
 }
-
-/**
- * Entities array
- */
-Entity.entities = new Array();
