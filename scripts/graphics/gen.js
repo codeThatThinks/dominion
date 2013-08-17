@@ -22,7 +22,7 @@ var generateTrees = function(gen, clump)
 		{
 			var treePoint = new IsometricPoint(clumpPoint.x + (Math.random() * 3 - 1), clumpPoint.y + (Math.random() * 3 - 1));
 
-			addEntity(new Entity("tree " + x, tree, treePoint, true));
+			new Entity("tree " + x, tree, treePoint, grid, true);
 		}
 	}
  }
@@ -36,7 +36,7 @@ var generateTrees = function(gen, clump)
  {
  	for( var n = 0; n <= num; n++)
  	{
- 		addEntity(new Entity("factory", factory, new IsometricPoint(Math.floor(Math.random() * 11), Math.floor(Math.random() * 11)), true));
+ 		new Entity("factory" + n, factory, new IsometricPoint(Math.floor(Math.random() * 11), Math.floor(Math.random() * 11)), grid, true);
  	}
  	
  }

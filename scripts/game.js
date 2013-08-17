@@ -50,11 +50,10 @@ $(document).ready(function()
 	//random generating buildings
 	genBuildings(5);
 
-	// entities
-	addEntity(new Entity("building", building, new IsometricPoint(2, 1), true));
-	addEntity(new Entity("factory", factory, new IsometricPoint(4, 5), true));
-	addEntity(new Entity("farmbuilding", farmbuilding, new IsometricPoint(8, 6), true));
-
+	// test entities
+	window.testBuilding = new Entity("building", building, new IsometricPoint(2, 1), grid, true);
+	window.testFactory = new Entity("factory", factory, new IsometricPoint(4, 5), grid, true);
+	window.testFarmbuilding = new Entity("farmbuilding", farmbuilding, new IsometricPoint(8, 6), grid, true);
 	
 	/* connect to game server */
 	connectToServer();
@@ -97,7 +96,7 @@ var gameLoop = function()
 	drawTerritory();
 
 	// draw entities
-	drawEntities();
+	Entity.drawEntities();
 
 
 	// draw UI
