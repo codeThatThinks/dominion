@@ -44,17 +44,17 @@ $(document).ready(function()
 	// create player country (countries[0])
 	addCountry("Country #" + Math.floor(Math.random() * 100), new Color(Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50, Math.floor(Math.random() * 206) + 50));
 
-	//render trees
-	generateTrees(100, 10);
-	
-	//random generating buildings
-	genBuildings(5);
-
 	// test entities
-	window.testBuilding = new Entity("building", building, new IsometricPoint(2, 1), grid, true);
-	window.testFactory = new Entity("factory", factory, new IsometricPoint(4, 5), grid, true);
-	window.testFarmbuilding = new Entity("farmbuilding", farmbuilding, new IsometricPoint(8, 6), grid, true);
+	window.testBuilding = new Entity("building", building, new IsometricPoint(2, 1), grid, false, true);
+	window.testFactory = new Entity("factory", factory, new IsometricPoint(4, 5), grid, false, true);
+	window.testFarmbuilding = new Entity("farmbuilding", farmbuilding, new IsometricPoint(8, 6), grid, false, true);
 	
+	// generate some forests
+	for(var n = 0; n <= 20; n++)
+	{
+		new Forest("forest", new IsometricPoint(Math.random() * 31 - 15, Math.random() * 31 - 15), grid, true);
+	}
+
 	/* connect to game server */
 	connectToServer();
 

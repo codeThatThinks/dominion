@@ -11,6 +11,8 @@ var factory;		// image for factory entity
 var farmbuilding;	// image for farmbuilding entity
 var tree;
 
+var entityTreeImage;
+
 /**
  * load resources
  */
@@ -33,4 +35,7 @@ var loadResources = function()
 	// load tree entity
 	tree = new Image();
 	tree.src = "./assets/entities/tree.png";
+
+	entityTreeImage = new Image();
+	entityTreeImage.src = "./assets/entities/tree.png";
 }
