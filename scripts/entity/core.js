@@ -45,7 +45,7 @@ function Entity(name, image, point, grid, topographic, visible)
 	{
 		for(var n = 0; n < this.constructor.entities.length; n++)
 		{
-			if(Math.floor(this.constructor.entities[n].point.x) == point.x && Math.floor(this.constructor.entities[n].point.y) == point.y)
+			if(Math.floor(this.constructor.entities[n].point.x) == point.x && Math.floor(this.constructor.entities[n].point.y) == point.y && this.constructor.entities[n].topographic == false)
 			{
 				return this.constructor.entities[n];
 			}
@@ -81,6 +81,7 @@ function Entity(name, image, point, grid, topographic, visible)
 	this.topographic = topographic;
 	this.visible = visible;
 
+	// add new entity to entities array
 	if(!this.constructor.entities) this.constructor.entities = new Array();
-	this.constructor.entities.push(this); // add new entity to entities array
+	this.constructor.entities.push(this);
 }
