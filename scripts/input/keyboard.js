@@ -29,17 +29,17 @@ $(document).ready(function()
 
 			if(e.keyCode == 49 || e.keyCode == 173)							// When 1 or - is pressed zoom out.
 			{
-				if((gridSpacing - 10) >= 20 && (gridSpacing - 10) <= 150)
+				if((grid.tileSize - 10) >= 20 && (grid.tileSize - 10) <= 150)
 				{
-					gridSpacing -= 10;
+					grid.tileSize -= 10;
 				}
 			}
 
 			if(e.keyCode == 50 || e.keyCode == 61)							// When 2 or = is pressed zoom in.
 			{
-				if((gridSpacing + 10) >= 20 && (gridSpacing + 10) <= 150)
+				if((grid.tileSize + 10) >= 20 && (grid.tileSize + 10) <= 150)
 				{
-					gridSpacing += 10;
+					grid.tileSize += 10;
 				}
 			}
 			
@@ -59,24 +59,28 @@ $(document).ready(function()
 			 * Handles camera movement
 			 */
 
-			if(e.keyCode == 65 || e.keyCode == 37)							//Camera  Left W					
+			if(e.keyCode == 65 || e.keyCode == 37)							//Camera Left W					
 			{
-				origin.set(origin.x + 55, origin.y);
+				grid.origin.x += 55;
+				//origin.set(origin.x + 55, origin.y);
 			}
 			
 			if(e.keyCode == 68 || e.keyCode == 39)							//Camera Right D						
 			{
-				origin.set(origin.x - 55, origin.y);
+				grid.origin.x -= 55;
+				//origin.set(origin.x - 55, origin.y);
 			}
 			
 			if(e.keyCode == 83 || e.keyCode == 40)							//Camera Down W					
 			{
-				origin.set(origin.x, origin.y - 55);
+				grid.origin.y -= 55;
+				//origin.set(origin.x, origin.y - 55);
 			}
 			
 			if(e.keyCode == 87 || e.keyCode == 38)							//Camera Up D				
 			{
-				origin.set(origin.x, origin.y + 55);
+				grid.origin.y += 55;
+				//origin.set(origin.x, origin.y + 55);
 			}
 
 		}
