@@ -7,6 +7,8 @@ $(document).ready(function()
 {
 	$(document).keyup(function(e)
 	{
+		var canvasWidth = document.getElementById("game").width;
+		var canvasHeight = document.getElementById("game").height;
 		if(allowInput)
 		{
 			if(e.keyCode == 88 && !isPanning)								// When X key is pressed enable panning mode.
@@ -45,7 +47,9 @@ $(document).ready(function()
 			
 			if(e.keyCode == 82)												//R Key centres the map			
 			{
-				origin.set(0 + (canvas.width() / 2), 0 + (canvas.height() / 2));
+				//origin.set(0 + (canvas.width() / 2), 0 + (canvas.height() / 2));
+				grid.origin.x = canvasWidth / 2;
+				grid.origin.y = canvasHeight / 2;
 			}
 		}
 	});
