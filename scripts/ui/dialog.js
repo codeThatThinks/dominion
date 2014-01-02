@@ -7,7 +7,8 @@ function Dialog(name, content)
 {
 	function show()
 	{
-		var html = '<div id="title-wrapper ' + this.name + '"><div id="title">' + this.content + '</div></div>';
+		//var html = '<div id="title-wrapper ' + this.name + '"><div id="title">' + this.content + '</div></div>';
+		var html = '<div id="' + this.name + '"><div id="title">' + this.content + '</div></div>';
 		$('body').prepend(html);
 	}
 
