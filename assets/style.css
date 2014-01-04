@@ -131,7 +131,7 @@ canvas#game
 				border-color: #FF5555;
 			}
 
-		form#login input[type=submit]
+		form#login input[type=submit], input[type=submit] /*Forgive the repetiton */
 		{
 			width: 170px;
 			height: 30px;
@@ -143,12 +143,12 @@ canvas#game
 			background-color: #555555;
 		}
 
-			form#login input[type=submit]:hover
+			form#login input[type=submit]:hover, input[type=submit] 
 			{
 				background-color: #333333;
 			}
 
-			form#login input[type=submit]:focus
+			form#login input[type=submit]:focus, input[type=submit] 
 			{
 				background-color: #333333;
 			}
@@ -242,4 +242,9 @@ input[type=submit]
 			
 #errorpage {
 	text-align: center;
+}
+
+.okay-btn {
+	position: absolute;
+	bottom: 50px;
 }
