@@ -3,12 +3,15 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
-function Dialog(name, content)
+function Dialog(name, content, headline)
 {
 	function show()
 	{
+		console.log(this.headline);
+		console.log(headline);
 		//var html = '<div id="title-wrapper ' + this.name + '"><div id="title">' + this.content + '</div></div>';
-		var html = '<div id="' + this.name + '"><div id="title">' + this.content + '<div><input type="submit" class="okay-btn" value="Okay" onclick="hide()" /></div></div></div>';
+		//This code is messy and could probably do with refactoring.
+		var html = '<div id="' + this.name + '"><div id="title"><h2>' + headline + '</h2><p>' + this.content + '</p><div><input type="submit" class="okay-btn" value="Okay" onclick="hide()" /></div></div></div>';
 		$('body').prepend(html);
 	}
 
