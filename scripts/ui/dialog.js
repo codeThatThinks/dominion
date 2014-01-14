@@ -3,7 +3,7 @@
  * Author: Ian Glen <ian@ianglen.me>
  *********/
 
-function Dialog(name, content, headline)
+function Dialog(name, content, headline, image)
 {
 	function show()
 	{
@@ -11,7 +11,7 @@ function Dialog(name, content, headline)
 		console.log(headline);
 		//var html = '<div id="title-wrapper ' + this.name + '"><div id="title">' + this.content + '</div></div>';
 		//This code is messy and could probably do with refactoring.
-		var html = '<div id="' + this.name + '"><div id="title"><h2>' + headline + '</h2><p>' + this.content + '</p><div><input type="submit" class="okay-btn" value="Okay" onclick="hide()" /></div></div></div>';
+		var html = '<div id="' + this.name + '"><div id="title"><h2>' + headline + '</h2><img src="assets/dialog-images/' + image +'.png" /><p>' + this.content + '</p><div><input type="submit" class="okay-btn" value="Okay" onclick="hide()" /></div></div></div>';
 		$('body').prepend(html);
 	}
 
